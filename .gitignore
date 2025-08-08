@@ -1,0 +1,59 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Backup files
+*.backup
+*.bak
+*.tmp
+*~
+
+# Deploy scripts (if containing sensitive info)
+deploy-prod.sh
+
+# Environment variables
+.env
+.env.local
+
+# Server config files that might contain sensitive data
+nginx.conf.local
+
+# Student data (if stored locally)
+student-data/
+submissions/
+
+# Build artifacts
+dist/
+build/

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Comparison - Internal | TechNova Systems</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .invoice-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .invoice {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .invoice.legitimate {
+            border-color: #4caf50;
+        }
+        .invoice.fraudulent {
+            border-color: #f44336;
+        }
+        .invoice-header {
+            border-bottom: 2px solid #333;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+        .invoice-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4a63e7;
+        }
+        .invoice-number {
+            float: right;
+            font-weight: bold;
+        }
+        .invoice-section {
+            margin: 1.5rem 0;
+        }
+        .invoice-section h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .invoice-table {
+            width: 100%;
+            margin: 1rem 0;
+        }
+        .invoice-table th {
+            background: #f5f5f5;
+            padding: 0.5rem;
+            text-align: left;
+        }
+        .invoice-table td {
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        .invoice-total {
+            text-align: right;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid #333;
+        }
+        .payment-box {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+        .highlight-difference {
+            background: #ffeb3b;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .difference-marker {
+            display: inline-block;
+            background: #f44336;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+        @media (max-width: 768px) {
+            .invoice-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="wrap">
+            <a href="../index.html" class="logo">
+                <span>TechNova Systems</span>
+            </a>
+            <nav class="nav">
+                <a href="../index.html">Home</a>
+                <a href="../press.html">Press</a>
+                <a href="helpdesk-log.html">Helpdesk Log</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="wrap">
+            <div class="internal-header">
+                INTERNAL DOCUMENT - EVIDENCE COMPARISON
+            </div>
+
+            <article class="card">
+                <h1>Invoice Comparison Analysis</h1>
+                <p>Below are examples of a legitimate TechNova invoice (left) and a fraudulent version sent to customers (right). Note the subtle differences in formatting and critical changes to payment information.</p>
+                
+                <div class="alert alert-danger">
+                    <strong>Critical Differences:</strong> The fraudulent invoice contains different bank account details and subtle formatting changes. At least 5 customers have already paid to the fraudulent account.
+                </div>
+            </article>
+
+            <div class="invoice-container">
+                <!-- Legitimate Invoice -->
+                <div class="invoice legitimate">
+                    <div style="text-align: center; margin-bottom: 0.5rem;">
+                        <span style="background: #4caf50; color: white; padding: 4px 12px; border-radius: 4px; font-weight: bold;">✓ LEGITIMATE</span>
+                    </div>
+                    
+                    <div class="invoice-header">
+                        <div class="invoice-logo">TechNova Systems</div>
+                        <div class="invoice-number">Invoice #INV-4486</div>
+                        <div style="clear: both;"></div>
+                    </div>
+                    
+                    <div class="invoice-section">
+                        <div style="float: left; width: 48%;">
+                            <h3>From:</h3>
+                            <strong>TechNova Systems Pty Ltd</strong><br>
+                            Level 12, 456 George Street<br>
+                            Sydney NSW 2000<br>
+                            ABN: 12 345 678 901<br>
+                            Phone: 1300 TECHNOVA
+                        </div>
+                        <div style="float: right; width: 48%; text-align: right;">
+                            <h3>To:</h3>
+                            <strong>Acme Corporation</strong><br>
+                            123 Business Park<br>
+                            Melbourne VIC 3000<br>
+                            Contact: John Smith<br>
+                            accounts@acme.example
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                    
+                    <div class="invoice-section">
+                        <h3>Invoice Details</h3>
+                        <table class="invoice-table">
+                            <tr>
+                                <td><strong>Invoice Date:</strong></td>
+                                <td>November 14, 2024</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Due Date:</strong></td>
+                                <td>November 28, 2024</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Terms:</strong></td>
+                                <td>Net 14 days</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="invoice-section">
+                        <h3>Services</h3>
+                        <table class="invoice-table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Period</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Managed IT Services</td>
+                                    <td>Nov 2024</td>
+                                    <td>$2,500.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Cloud Backup (50GB)</td>
+                                    <td>Nov 2024</td>
+                                    <td>$450.00</td>
+                                </tr>
+                                <tr>
+                                    <td>24/7 Helpdesk Support</td>
+                                    <td>Nov 2024</td>
+                                    <td>$450.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="invoice-total">
+                        Total Due: $3,400.00 AUD
+                    </div>
+                    
+                    <div class="payment-box">
+                        <h3>Payment Information</h3>
+                        <strong>Bank:</strong> Commonwealth Bank of Australia<br>
+                        <strong>Account Name:</strong> TechNova Systems Pty Ltd<br>
+                        <strong>BSB:</strong> <span style="background: #e8f5e9; padding: 2px 6px;">062-000</span><br>
+                        <strong>Account Number:</strong> <span style="background: #e8f5e9; padding: 2px 6px;">1234 5678</span><br>
+                        <strong>Reference:</strong> INV-4486
+                    </div>
+                    
+                    <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #ddd; font-size: 0.85rem; color: #666;">
+                        <p>Thank you for your business!</p>
+                        <p>For queries: accounts@technova.example | 1300 TECHNOVA</p>
+                    </div>
+                </div>
+
+                <!-- Fraudulent Invoice -->
+                <div class="invoice fraudulent">
+                    <div style="text-align: center; margin-bottom: 0.5rem;">
+                        <span style="background: #f44336; color: white; padding: 4px 12px; border-radius: 4px; font-weight: bold;">⚠ FRAUDULENT</span>
+                    </div>
+                    
+                    <div class="invoice-header">
+                        <div class="invoice-logo">TechNova Systems</div>
+                        <div class="invoice-number">Invoice #INV-4486</div>
+                        <div style="clear: both;"></div>
+                    </div>
+                    
+                    <div class="invoice-section">
+                        <div style="float: left; width: 48%;">
+                            <h3>From:</h3>
+                            <strong>TechNova Systems Pty Ltd</strong><br>
+                            Level 12, 456 George Street<br>
+                            Sydney NSW 2000<br>
+                            ABN: 12 345 678 901<br>
+                            Phone: 1300 TECHNOVA
+                        </div>
+                        <div style="float: right; width: 48%; text-align: right;">
+                            <h3>To:</h3>
+                            <strong>Acme Corporation</strong><br>
+                            123 Business Park<br>
+                            Melbourne VIC 3000<br>
+                            Contact: John Smith<br>
+                            accounts@acme.example
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                    
+                    <div class="invoice-section">
+                        <h3>Invoice Details</h3>
+                        <table class="invoice-table">
+                            <tr>
+                                <td><strong>Invoice Date:</strong></td>
+                                <td>November 14, 2024</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Due Date:</strong></td>
+                                <td><span class="highlight-difference">November 21, 2024</span> <span class="difference-marker">URGENT</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Terms:</strong></td>
+                                <td><span class="highlight-difference">Net 7 days - IMMEDIATE PAYMENT REQUIRED</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="invoice-section">
+                        <h3>Services</h3>
+                        <table class="invoice-table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Period</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Managed IT Services</td>
+                                    <td>Nov 2024</td>
+                                    <td>$2,500.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Cloud Backup (50GB)</td>
+                                    <td>Nov 2024</td>
+                                    <td>$450.00</td>
+                                </tr>
+                                <tr>
+                                    <td>24/7 Helpdesk Support</td>
+                                    <td>Nov 2024</td>
+                                    <td>$450.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="invoice-total">
+                        Total Due: $3,400.00 AUD
+                    </div>
+                    
+                    <div class="payment-box" style="background: #ffebee;">
+                        <h3>UPDATED Payment Information <span class="difference-marker">NEW</span></h3>
+                        <p style="color: red; font-weight: bold;">⚠ Please note our updated banking details below:</p>
+                        <strong>Bank:</strong> <span class="highlight-difference">ANZ Bank</span><br>
+                        <strong>Account Name:</strong> TechNova Systems Pty Ltd<br>
+                        <strong>BSB:</strong> <span class="highlight-difference">033-547</span><br>
+                        <strong>Account Number:</strong> <span class="highlight-difference">8976 5432</span><br>
+                        <strong>Reference:</strong> INV-4486<br>
+                        <p style="margin-top: 0.5rem; font-style: italic;">Due to system upgrade, please use these new details</p>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #ddd; font-size: 0.85rem; color: #666;">
+                        <p>Thank you for your business!</p>
+                        <p>For queries: billing@technova-systems.net | 1300 TECHNOVA</p>
+                        <p style="color: red;">Please update your records with our new bank details</p>
+                    </div>
+                </div>
+            </div>
+
+            <article class="card">
+                <h2>Analysis Summary</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Element</th>
+                            <th>Legitimate Invoice</th>
+                            <th>Fraudulent Invoice</th>
+                            <th>Red Flag</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bank Name</td>
+                            <td>Commonwealth Bank</td>
+                            <td>ANZ Bank</td>
+                            <td>🚩 Different bank</td>
+                        </tr>
+                        <tr>
+                            <td>BSB</td>
+                            <td>062-000</td>
+                            <td>033-547</td>
+                            <td>🚩 Changed BSB</td>
+                        </tr>
+                        <tr>
+                            <td>Account Number</td>
+                            <td>1234 5678</td>
+                            <td>8976 5432</td>
+                            <td>🚩 Different account</td>
+                        </tr>
+                        <tr>
+                            <td>Due Date</td>
+                            <td>14 days (Nov 28)</td>
+                            <td>7 days (Nov 21)</td>
+                            <td>🚩 Urgency added</td>
+                        </tr>
+                        <tr>
+                            <td>Contact Email</td>
+                            <td>accounts@technova.example</td>
+                            <td>billing@technova-systems.net</td>
+                            <td>🚩 Different domain</td>
+                        </tr>
+                        <tr>
+                            <td>Special Notes</td>
+                            <td>None</td>
+                            <td>"System upgrade" message</td>
+                            <td>🚩 Excuse for change</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+
+            <article class="card">
+                <h2>Impact Assessment</h2>
+                <p>Based on our investigation:</p>
+                <ul>
+                    <li>23 legitimate invoices were downloaded by the attacker</li>
+                    <li>Modified versions were sent to customers within 30 minutes</li>
+                    <li>At least 5 customers have confirmed receiving fraudulent invoices</li>
+                    <li>2 customers have already paid $8,750 total to the fraudulent account</li>
+                    <li>Remaining 18 customers are being contacted urgently</li>
+                </ul>
+                <p><a href="access-log.html">View access logs</a> showing when these files were downloaded.</p>
+            </article>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="wrap">
+            <p>Internal Document - TechNova Systems</p>
+            <p class="small">Evidence File - Confidential</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/chatbot.js"></script>
+</body>
+</html>

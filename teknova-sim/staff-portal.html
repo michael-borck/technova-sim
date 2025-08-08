@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Portal - TechNova Systems</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .login-container {
+            max-width: 400px;
+            margin: 3rem auto;
+        }
+        .login-form input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        .login-form input:disabled {
+            background: #f5f5f5;
+            cursor: not-allowed;
+        }
+        .login-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .quick-links {
+            background: #f0f4ff;
+            border: 1px solid #d0d8ff;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+        }
+        .quick-links h3 {
+            color: var(--brand);
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="wrap">
+            <a href="index.html" class="logo">
+                <span>TechNova Systems</span>
+            </a>
+            <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="services.html">Services</a>
+                <a href="about.html">About</a>
+                <a href="press.html">Press</a>
+                <a href="faq.html">Customer FAQ</a>
+                <a href="staff-portal.html" class="active">Staff Portal</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="wrap">
+            <div class="login-container">
+                <div class="card">
+                    <h1>Staff Portal Login</h1>
+                    <div class="alert alert-warning">
+                        <strong>System Maintenance:</strong> Portal login is temporarily disabled while we investigate a security incident. All staff passwords are being reset as a precaution.
+                    </div>
+                    
+                    <form class="login-form" onsubmit="return false;">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="your.name@technova.example" disabled>
+                        
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Enter your password" disabled>
+                        
+                        <button type="submit" class="btn login-btn" disabled>Login Disabled</button>
+                    </form>
+                    
+                    <div class="quick-links">
+                        <h3>Having trouble logging in?</h3>
+                        <p>While the portal is under maintenance, you can access:</p>
+                        <ul>
+                            <li><a href="internal/helpdesk-log.html">Helpdesk Updates</a> - Recent support tickets and issues</li>
+                            <li><a href="#" onclick="alert('Password reset system is offline. Contact IT Support directly.'); return false;">Password Reset</a> (Currently Offline)</li>
+                            <li><a href="#" onclick="alert('For security training materials, check your email from last month.'); return false;">Security Training Resources</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card mt-2">
+                    <h2>Important Security Reminders</h2>
+                    <ul>
+                        <li>Never share your password with anyone, including IT staff</li>
+                        <li>Report suspicious emails immediately to security@technova.example</li>
+                        <li>Verify all "urgent" requests through a secondary channel</li>
+                        <li>CloudSafe renewal emails come from @cloudsafe.com, not TechNova</li>
+                    </ul>
+                    <p class="small mt-2">Last security training: October 2024 - "Identifying Phishing Attempts"</p>
+                </div>
+
+                <div class="card mt-2">
+                    <h2>Recent System Notifications</h2>
+                    <div class="evidence-item">
+                        <div class="evidence-label">15 Nov 2024 - 10:30 AM</div>
+                        <p>All staff passwords reset due to security incident. Check email for new credentials.</p>
+                    </div>
+                    <div class="evidence-item">
+                        <div class="evidence-label">15 Nov 2024 - 09:45 AM</div>
+                        <p>Multiple reports of suspicious invoice emails. Do not click any links.</p>
+                    </div>
+                    <div class="evidence-item">
+                        <div class="evidence-label">15 Nov 2024 - 09:15 AM</div>
+                        <p>Unusual activity detected on file server. Investigation underway.</p>
+                    </div>
+                    <div class="evidence-item">
+                        <div class="evidence-label">14 Nov 2024 - 04:00 PM</div>
+                        <p>Reminder: CloudSafe backup renewal due next month. Official notice will come from CloudSafe directly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="wrap">
+            <p>&copy; 2024 TechNova Systems. All rights reserved.</p>
+            <p class="small">Internal Use Only | Report Security Incidents: security@technova.example</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/chatbot.js"></script>
+</body>
+</html>

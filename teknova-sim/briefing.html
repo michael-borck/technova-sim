@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Briefing - TechNova Incident Response</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .briefing-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .classification {
+            background: #e74c3c;
+            color: white;
+            padding: 0.5rem;
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .content {
+            padding: 2rem;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+        }
+        
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .section h2::before {
+            content: '▶';
+            color: #3498db;
+        }
+        
+        .alert-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+        
+        .alert-box strong {
+            color: #856404;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .info-card {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .info-card h3 {
+            color: #495057;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-card p {
+            color: #212529;
+            font-weight: 500;
+        }
+        
+        .objectives {
+            background: #e8f4f8;
+            border: 1px solid #b8daff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        .objectives h3 {
+            color: #004085;
+            margin-bottom: 1rem;
+        }
+        
+        .objectives ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .objectives li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .objectives li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .tools-section {
+            background: #f0f0f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .tool-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 5px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .tool-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tool-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .tool-desc {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+        
+        .tips-section {
+            background: #e8f5e9;
+            border: 1px solid #4caf50;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        .tips-section h3 {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+        }
+        
+        .tips-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .tips-section li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #1b5e20;
+        }
+        
+        .tips-section li::before {
+            content: '💡';
+            position: absolute;
+            left: 0;
+        }
+        
+        .action-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            text-align: center;
+            margin: -2rem;
+            margin-top: 2rem;
+        }
+        
+        .start-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 1rem 3rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .countdown {
+            color: white;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .warning {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .info-grid, .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .start-button {
+                padding: 0.8rem 2rem;
+                font-size: 1.1rem;
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            }
+            50% {
+                box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+            }
+            100% {
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="briefing-container">
+        <div class="header">
+            <h1>🔒 Cybersecurity Incident Response</h1>
+            <div class="subtitle">TechNova Systems Security Breach Investigation</div>
+        </div>
+        
+        <div class="classification">
+            CONFIDENTIAL - TRAINING EXERCISE
+        </div>
+        
+        <div class="content">
+            <section class="section">
+                <h2>Mission Briefing</h2>
+                <p>You have been called in as a <strong>Junior Security Consultant</strong> to investigate a potential data breach at TechNova Systems, a mid-sized IT services company.</p>
+                
+                <div class="alert-box">
+                    <strong>⚠️ Urgent:</strong> The company is experiencing an active security incident. Customer data may have been compromised. Your investigation is critical to understanding what happened and preventing future attacks.
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>Incident Overview</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Company</h3>
+                        <p>TechNova Systems</p>
+                        <small>IT Services Provider</small>
+                    </div>
+                    <div class="info-card">
+                        <h3>Date</h3>
+                        <p>November 15, 2024</p>
+                        <small>This morning</small>
+                    </div>
+                    <div class="info-card">
+                        <h3>Severity</h3>
+                        <p style="color: #e74c3c;">HIGH</p>
+                        <small>Customer data affected</small>
+                    </div>
+                    <div class="info-card">
+                        <h3>Your Role</h3>
+                        <p>Incident Investigator</p>
+                        <small>Find out what happened</small>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section">
+                <div class="objectives">
+                    <h3>🎯 Your Mission Objectives</h3>
+                    <ul>
+                        <li>Investigate the TechNova Systems website for clues</li>
+                        <li>Interview company employees using the chat system</li>
+                        <li>Collect and analyze evidence of the breach</li>
+                        <li>Determine the attack timeline and method</li>
+                        <li>Identify what data was compromised</li>
+                        <li>Recommend security improvements</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>Available Tools & Resources</h2>
+                <div class="tools-section">
+                    <div class="tools-grid">
+                        <div class="tool-item">
+                            <div class="tool-icon">🌐</div>
+                            <div class="tool-name">Company Website</div>
+                            <div class="tool-desc">Public pages and press releases</div>
+                        </div>
+                        <div class="tool-item">
+                            <div class="tool-icon">💬</div>
+                            <div class="tool-name">Employee Chat</div>
+                            <div class="tool-desc">Interview 4 staff members</div>
+                        </div>
+                        <div class="tool-item">
+                            <div class="tool-icon">📁</div>
+                            <div class="tool-name">Internal Documents</div>
+                            <div class="tool-desc">Access logs, emails, memos</div>
+                        </div>
+                        <div class="tool-item">
+                            <div class="tool-icon">📋</div>
+                            <div class="tool-name">Investigation Worksheet</div>
+                            <div class="tool-desc">Track your findings</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section">
+                <div class="tips-section">
+                    <h3>🔍 Investigation Tips</h3>
+                    <ul>
+                        <li>Start by exploring the public website - look for any notices or alerts</li>
+                        <li>Check the press release and FAQ for official statements</li>
+                        <li>Use the floating "+" button to chat with employees</li>
+                        <li>Different employees know different things - talk to everyone</li>
+                        <li>Look for links to internal documents and evidence</li>
+                        <li>Pay attention to timestamps and specific details</li>
+                        <li>Take notes on your worksheet as you investigate</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>Important Information</h2>
+                <div class="warning">
+                    <strong>Remember:</strong> This is a simulation for educational purposes. In this exercise, you'll learn to:
+                    <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                        <li>Recognize phishing attacks</li>
+                        <li>Understand how breaches occur</li>
+                        <li>Think like a security professional</li>
+                        <li>Protect organizations from cyber threats</li>
+                    </ul>
+                </div>
+                
+                <p style="margin-top: 1rem;"><strong>Time Required:</strong> Approximately 45-60 minutes</p>
+                <p><strong>Work Mode:</strong> Individual or teams of 2-3 students</p>
+            </section>
+        </div>
+        
+        <div class="action-section">
+            <a href="index.html" class="start-button pulse">
+                Begin Investigation →
+            </a>
+            <div class="countdown">
+                The clock is ticking. TechNova needs your help!
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Add some interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate the classification banner
+            const classification = document.querySelector('.classification');
+            setInterval(() => {
+                classification.style.opacity = '0.7';
+                setTimeout(() => {
+                    classification.style.opacity = '1';
+                }, 500);
+            }, 3000);
+            
+            // Add countdown urgency
+            let urgencyMessages = [
+                "The clock is ticking. TechNova needs your help!",
+                "Customers are at risk. Begin your investigation now.",
+                "Every minute counts in incident response.",
+                "Are you ready to uncover the truth?"
+            ];
+            let currentMessage = 0;
+            
+            setInterval(() => {
+                currentMessage = (currentMessage + 1) % urgencyMessages.length;
+                document.querySelector('.countdown').textContent = urgencyMessages[currentMessage];
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Email Evidence - Internal | TechNova Systems</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .email-container {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 0;
+            margin: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .email-header {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .email-field {
+            display: flex;
+            margin-bottom: 0.5rem;
+        }
+        .email-field strong {
+            min-width: 80px;
+            color: #666;
+        }
+        .email-body {
+            padding: 1.5rem;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        .phishing-highlight {
+            background: #ffeb3b;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .email-button {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        .analysis-box {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .suspicious-item {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="wrap">
+            <a href="../index.html" class="logo">
+                <span>TechNova Systems</span>
+            </a>
+            <nav class="nav">
+                <a href="../index.html">Home</a>
+                <a href="../press.html">Press</a>
+                <a href="../faq.html">Customer FAQ</a>
+                <a href="helpdesk-log.html">Helpdesk Log</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="wrap">
+            <div class="internal-header">
+                INTERNAL DOCUMENT - EVIDENCE
+            </div>
+
+            <article class="card">
+                <h1>Phishing Email Analysis</h1>
+                <p>This is the email that was sent to multiple TechNova staff members on November 15, 2024, at approximately 9:00 AM.</p>
+                
+                <div class="analysis-box">
+                    <h3>⚠️ Key Indicators of Phishing:</h3>
+                    <ul>
+                        <li>From address domain: <span class="suspicious-item">tecknova.com</span> (missing 'h' - should be technova.com)</li>
+                        <li>Link destination: <span class="suspicious-item">backups-secure.net</span> (not CloudSafe's domain)</li>
+                        <li>Urgency tactics: "URGENT" and "expires in 24 hours"</li>
+                        <li>Grammar issues: "require your immediate attention"</li>
+                        <li>Generic greeting: "Dear Valued Customer" instead of personalized</li>
+                    </ul>
+                </div>
+
+                <div class="email-container">
+                    <div class="email-header">
+                        <div class="email-field">
+                            <strong>From:</strong> 
+                            <span>CloudSafe Backup Support &lt;<span class="phishing-highlight">backup-support@tecknova.com</span>&gt;</span>
+                        </div>
+                        <div class="email-field">
+                            <strong>To:</strong> 
+                            <span>all-staff@technova.example</span>
+                        </div>
+                        <div class="email-field">
+                            <strong>Date:</strong> 
+                            <span>November 15, 2024 9:02 AM</span>
+                        </div>
+                        <div class="email-field">
+                            <strong>Subject:</strong> 
+                            <span style="color: red; font-weight: bold;">URGENT: Cloud Backup Renewal Required - Action Needed</span>
+                        </div>
+                    </div>
+                    
+                    <div class="email-body">
+                        <p>Dear Valued Customer,</p>
+                        
+                        <p>This is an urgent notification regarding your CloudSafe Backup subscription for TechNova Systems that <span class="phishing-highlight">require your immediate attention</span>.</p>
+                        
+                        <p><strong>Your backup service will expire in 24 hours!</strong></p>
+                        
+                        <p>To ensure continuous protection of your critical business data, you must renew your subscription immediately. Failure to renew will result in:</p>
+                        
+                        <ul>
+                            <li>Loss of all backup history</li>
+                            <li>Inability to restore files</li>
+                            <li>Compliance violations</li>
+                            <li>Potential data loss</li>
+                        </ul>
+                        
+                        <p><strong>Click below to secure your renewal now:</strong></p>
+                        
+                        <div style="text-align: center;">
+                            <a href="#" class="email-button" onclick="alert('Malicious link to: https://backups-secure.net/renewal?id=TN2024&urgent=true'); return false;">
+                                RENEW YOUR BACKUP NOW
+                            </a>
+                        </div>
+                        
+                        <p>You will need to verify your account credentials to process the renewal. This is for your security.</p>
+                        
+                        <p>If you have any questions, please contact our support team immediately at backup-help@cloudsafe-support.net</p>
+                        
+                        <p>Best regards,<br>
+                        CloudSafe Backup Team<br>
+                        <span class="phishing-highlight">Protecting Your Data Since 2020</span></p>
+                        
+                        <p style="font-size: 11px; color: #999;">
+                        This is an automated message. Please do not reply to this email.<br>
+                        CloudSafe Backup Solutions - A TechNova Partner<br>
+                        © 2024 CloudSafe Technologies
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card">
+                <h2>Technical Analysis</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Header</th>
+                            <th>Value</th>
+                            <th>Analysis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Return-Path</td>
+                            <td>bounce@mail-service-83.net</td>
+                            <td class="suspicious-item">Suspicious - doesn't match sender</td>
+                        </tr>
+                        <tr>
+                            <td>SPF</td>
+                            <td>softfail</td>
+                            <td class="suspicious-item">Failed SPF check</td>
+                        </tr>
+                        <tr>
+                            <td>DKIM</td>
+                            <td>none</td>
+                            <td class="suspicious-item">No DKIM signature</td>
+                        </tr>
+                        <tr>
+                            <td>Reply-To</td>
+                            <td>no-reply@backups-secure.net</td>
+                            <td class="suspicious-item">Different domain</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+
+            <article class="card">
+                <h2>Victim Impact</h2>
+                <p><strong>Sarah Mitchell (Accounts Clerk)</strong> clicked the link and entered her credentials on the fake site at approximately 9:12 AM.</p>
+                <p>The attacker then used her credentials to:</p>
+                <ol>
+                    <li>Log into the TechNova file server</li>
+                    <li>Navigate to the Invoices directory</li>
+                    <li>Download 23 customer invoice PDFs</li>
+                    <li>Modify the invoices with different bank account details</li>
+                    <li>Send the modified invoices to customers</li>
+                </ol>
+                <p><a href="helpdesk-log.html">← Back to Helpdesk Log</a> | <a href="invoices.html">View Invoice Comparison →</a></p>
+            </article>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="wrap">
+            <p>Internal Document - TechNova Systems</p>
+            <p class="small">Evidence File - Do Not Distribute</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/chatbot.js"></script>
+</body>
+</html>

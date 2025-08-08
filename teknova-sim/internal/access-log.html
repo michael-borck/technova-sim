@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Access Log - Internal | TechNova Systems</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .log-container {
+            background: #1e1e1e;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .log-line {
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+        }
+        .log-timestamp {
+            color: #ffeb3b;
+        }
+        .log-ip {
+            color: #64b5f6;
+        }
+        .log-method {
+            color: #81c784;
+        }
+        .log-path {
+            color: #ffffff;
+        }
+        .log-status-ok {
+            color: #4caf50;
+        }
+        .log-status-error {
+            color: #f44336;
+        }
+        .suspicious-line {
+            background: rgba(244, 67, 54, 0.2);
+            border-left: 3px solid #f44336;
+            padding-left: 0.5rem;
+        }
+        .normal-line {
+            opacity: 0.7;
+        }
+        .log-filter {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        .summary-table {
+            margin: 1rem 0;
+        }
+        .summary-table td:first-child {
+            font-weight: bold;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="wrap">
+            <a href="../index.html" class="logo">
+                <span>TechNova Systems</span>
+            </a>
+            <nav class="nav">
+                <a href="../index.html">Home</a>
+                <a href="../press.html">Press</a>
+                <a href="helpdesk-log.html">Helpdesk Log</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="wrap">
+            <div class="internal-header">
+                INTERNAL DOCUMENT - SERVER ACCESS LOG
+            </div>
+
+            <article class="card">
+                <h1>File Server Access Log Analysis</h1>
+                <p>Filtered view showing access to the /files/invoices/ directory on November 15, 2024</p>
+                
+                <div class="log-filter">
+                    <strong>Filter Applied:</strong> Path contains "/invoices/" | Time range: 09:00-11:00 AM | Sorted by timestamp
+                </div>
+            </article>
+
+            <article class="card">
+                <h2>Suspicious Activity Summary</h2>
+                <table class="summary-table">
+                    <tr>
+                        <td>Suspicious IP Address:</td>
+                        <td><span style="color: #f44336; font-weight: bold;">203.0.113.45</span></td>
+                    </tr>
+                    <tr>
+                        <td>Time Period:</td>
+                        <td>10:01:23 AM - 10:15:47 AM (14 minutes 24 seconds)</td>
+                    </tr>
+                    <tr>
+                        <td>Files Accessed:</td>
+                        <td>23 invoice PDF files</td>
+                    </tr>
+                    <tr>
+                        <td>Total Data Downloaded:</td>
+                        <td>~18.4 MB</td>
+                    </tr>
+                    <tr>
+                        <td>User Agent:</td>
+                        <td>Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/119.0.0.0</td>
+                    </tr>
+                    <tr>
+                        <td>Authentication:</td>
+                        <td>Valid credentials for: sarah.mitchell@technova.example</td>
+                    </tr>
+                </table>
+            </article>
+
+            <article class="card">
+                <h2>Access Log Extract</h2>
+                <div class="log-container">
+                    <div class="log-line normal-line">
+                        <span class="log-timestamp">2024-11-15 09:45:12</span> | 
+                        <span class="log-ip">192.168.1.45</span> | 
+                        <span class="log-method">GET</span> 
+                        <span class="log-path">/files/invoices/</span> | 
+                        <span class="log-status-ok">200 OK</span> | 
+                        User: john.doe@technova.example
+                    </div>
+                    <div class="log-line normal-line">
+                        <span class="log-timestamp">2024-11-15 09:45:18</span> | 
+                        <span class="log-ip">192.168.1.45</span> | 
+                        <span class="log-method">GET</span> 
+                        <span class="log-path">/files/invoices/INV-4481.pdf</span> | 
+                        <span class="log-status-ok">200 OK</span> | 
+                        User: john.doe@technova.example
+                    </div>
+                    <div class="log-line normal-line">
+                        <span class="log-timestamp">2024-11-15 09:52:33</span> | 
+                        <span class="log-ip">192.168.1.67</span> | 
+                        <span class="log-method">GET</span> 
+                        <span class="log-path">/files/invoices/</span> | 
+                        <span class="log-status-ok">200 OK</span> | 
+                        User: admin@technova.example
+                    </div>
+                    
+                    <!-- Suspicious activity starts -->
+                    <div class="log-line suspicious-line">
+                        <span class="log-timestamp">2024-11-15 10:01:23</span> | 
+                        <span class="log-ip">203.0.113.45</span> | 
+                        <span class="log-method">GET</span> 
+                        <span class="log-path">/files/invoices/</span> | 
+                        <span class="log-status-ok">200 OK</span> | 
+                        User: sarah.mitchell@technova.example
+                    </div>
+                    <div class="log-line suspicious-line">
+                        <span class="log-timestamp">2024-11-15 10:01:45</span> | 
+                        <span class="log-ip">203.0.113.45</span> | 
+                        <span class="log-method">GET</span> 
+                        <span class="log-path">/files/invoices/INV-4471.pdf</span> | 
+                        <span class="log-status-ok">200 OK</span> | 
+                        Size: 782KB
+                    </div>
+                    <div class="log-line suspicious-line">
+                        <span class="log-timestamp">2024-11-15 10:02:03</span> | 
+                        <span class="log-ip">203.0.113.45</span> | 
+                        <span class="log-method">GET</span> 
+                        <span class="log-path">/files/invoices/INV-4472.pdf</span> | 
+                        <span class="log-status-ok">200 OK</span> | 
+                        Size: 791KB
+                    </div>
+                    <div class="log-line suspicious-line">
+                        <span class="log-timestamp">2024-11-15 10:02:21</span> | 
+                        <span class="log-ip">203.0.113.45</span> | 
+                        <span class="log-method">GET</span> 
+                        <span class="log-path">/files/invoices/INV-4473.pdf</span> | 
+                        <span class="log-status-ok">200 OK</span> | 
+                        Size: 798KB
+                    </div>
+                    <div class="log-line suspicious-line">
+                        <span class="log-timestamp">2024-11-15 10:02:39</span> | 
+                        <span class="log-ip">203.0.113.45</span> | 
+                        <span class="log-method">GET</span> 
+                        <span class="log-path">/files/invoices/INV-4474.pdf</span> | 
+                        <span class="log-status-ok">200 OK</span> | 
+                        Size: 805KB
+                    </div>
+                    <div class="log-line suspicious-line">
+                        <span class="log-timestamp">2024-11-15 10:02:57</span> | 
+                        <span class="log-ip">203.0.113.45</span> | 
+                        <span class="log-method">GET</span> 
+                        <span class="log-path">/files/invoices/INV-4475.pdf</span> | 
+                        <span class="log-status-ok">200 OK</span> | 
+                        Size: 812KB
+                    </div>
+                    <div class="log-line suspicious-line">
+                        <span class="log-timestamp">2024-11-15 10:03:15</span> | 
+                        <span class="log-ip">203.0.113.45</span> | 
+                        <span class="log-method">GET</span> 
+                        <span class="log-path">/files/invoices/INV-4476.pdf</span> | 
+                        <span class="log-status-ok">200 OK</span> | 
+                        Size: 799KB
+                    </div>
+                    <div class="log-line suspicious-line">
+                        <span class="log-timestamp">2024-11-15 10:03:33</span> | 
+                        <span class="log-ip">203.0.113.45</span> | 
+                        <span class="log-method">GET</span> 
+                        <span class="log-path">/files/invoices/INV-4477.pdf</span> | 
+                        <span class="log-status-ok">200 OK</span> | 
+                        Size: 787KB
+                    </div>
+                    <div class="log-line suspicious-line">
+                        <span class="log-timestamp">2024-11-15 10:03:51</span> | 
+                        <span class="log-ip">203.0.113.45</span> | 
+                        <span class="log-method">GET</span> 
+                        <span class="log-path">/files/invoices/INV-4478.pdf</span> | 
+                        <span class="log-status-ok">200 OK</span> | 
+                        Size: 823KB
+                    </div>
+                    <div class="log-line suspicious-line">
+                        <span class="log-timestamp">2024-11-15 10:04:09</span> | 
+                        <span class="log-ip">203.0.113.45</span> | 
+                        <span class="log-method">GET</span> 
+                        <span class="log-path">/files/invoices/INV-4479.pdf</span> | 
+                        <span class="log-status-ok">200 OK</span> | 
+                        Size: 795KB
+                    </div>
+                    <div class="log-line suspicious-line">
+                        <span class="log-timestamp">2024-11-15 10:04:27</span> | 
+                        <span class="log-ip">203.0.113.45</span> | 
+                        <span class="log-method">GET</span> 
+                        <span class="log-path">/files/invoices/INV-4480.pdf</span> | 
+                        <span class="log-status-ok">200 OK</span> | 
+                        Size: 801KB
+                    </div>
+                    <div class="log-line" style="text-align: center; color: #666; margin: 0.5rem 0;">
+                        ... [13 more similar entries] ...
+                    </div>
+                    <div class="log-line suspicious-line">
+                        <span class="log-timestamp">2024-11-15 10:14:45</span> | 
+                        <span class="log-ip">203.0.113.45</span> | 
+                        <span class="log-method">GET</span> 
+                        <span class="log-path">/files/invoices/INV-4492.pdf</span> | 
+                        <span class="log-status-ok">200 OK</span> | 
+                        Size: 789KB
+                    </div>
+                    <div class="log-line suspicious-line">
+                        <span class="log-timestamp">2024-11-15 10:15:03</span> | 
+                        <span class="log-ip">203.0.113.45</span> | 
+                        <span class="log-method">GET</span> 
+                        <span class="log-path">/files/invoices/INV-4493.pdf</span> | 
+                        <span class="log-status-ok">200 OK</span> | 
+                        Size: 816KB
+                    </div>
+                    <div class="log-line suspicious-line">
+                        <span class="log-timestamp">2024-11-15 10:15:47</span> | 
+                        <span class="log-ip">203.0.113.45</span> | 
+                        <span class="log-method">POST</span> 
+                        <span class="log-path">/logout</span> | 
+                        <span class="log-status-ok">302 REDIRECT</span> | 
+                        Session terminated
+                    </div>
+                    
+                    <!-- Normal activity resumes -->
+                    <div class="log-line normal-line">
+                        <span class="log-timestamp">2024-11-15 10:22:14</span> | 
+                        <span class="log-ip">192.168.1.89</span> | 
+                        <span class="log-method">GET</span> 
+                        <span class="log-path">/files/invoices/</span> | 
+                        <span class="log-status-ok">200 OK</span> | 
+                        User: accounts@technova.example
+                    </div>
+                    <div class="log-line normal-line">
+                        <span class="log-timestamp">2024-11-15 10:35:22</span> | 
+                        <span class="log-ip">192.168.1.12</span> | 
+                        <span class="log-method">GET</span> 
+                        <span class="log-path">/files/invoices/INV-4494.pdf</span> | 
+                        <span class="log-status-ok">200 OK</span> | 
+                        User: billing@technova.example
+                    </div>
+                </div>
+            </article>
+
+            <article class="card">
+                <h2>IP Address Analysis</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>IP Address</th>
+                            <th>Location</th>
+                            <th>ISP</th>
+                            <th>Risk Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>192.168.1.x</td>
+                            <td>Internal Network</td>
+                            <td>TechNova LAN</td>
+                            <td style="color: #4caf50;">Normal</td>
+                        </tr>
+                        <tr style="background: #ffebee;">
+                            <td><strong>203.0.113.45</strong></td>
+                            <td>Eastern Europe (VPN)</td>
+                            <td>Anonymous Proxy Service</td>
+                            <td style="color: #f44336; font-weight: bold;">HIGH RISK</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+
+            <article class="card">
+                <h2>Attack Pattern Analysis</h2>
+                <ul>
+                    <li><strong>Automated Download:</strong> Files were accessed at regular ~18-second intervals, suggesting automated script</li>
+                    <li><strong>Sequential Access:</strong> Invoice numbers accessed in order (4471-4493), indicating systematic exfiltration</li>
+                    <li><strong>No Errors:</strong> All requests successful, suggesting valid credentials were used</li>
+                    <li><strong>Clean Exit:</strong> Proper logout performed to avoid suspicion</li>
+                    <li><strong>Time Gap:</strong> 46-minute delay between credential theft (9:12 AM) and data access (10:01 AM)</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <h2>Affected Customers</h2>
+                <p>The following invoice numbers were compromised and may have been sent to customers with altered payment details:</p>
+                <div style="columns: 3; column-gap: 2rem;">
+                    <ul style="margin: 0;">
+                        <li>INV-4471 - Acme Corp</li>
+                        <li>INV-4472 - Blue Sky Ltd</li>
+                        <li>INV-4473 - Crystal Tech</li>
+                        <li>INV-4474 - Delta Systems</li>
+                        <li>INV-4475 - Echo Solutions</li>
+                        <li>INV-4476 - Falcon Industries</li>
+                        <li>INV-4477 - Green Energy Co</li>
+                        <li>INV-4478 - Horizon Tech</li>
+                        <li>INV-4479 - Innovate Plus</li>
+                        <li>INV-4480 - Jupiter Corp</li>
+                        <li>INV-4481 - Kappa Systems</li>
+                        <li>INV-4482 - Lambda Tech</li>
+                        <li>INV-4483 - Metro Solutions</li>
+                        <li>INV-4484 - Nova Industries</li>
+                        <li>INV-4485 - Omega Corp</li>
+                        <li>INV-4486 - Phoenix Ltd</li>
+                        <li>INV-4487 - Quantum Tech</li>
+                        <li>INV-4488 - Rapid Systems</li>
+                        <li>INV-4489 - Sigma Corp</li>
+                        <li>INV-4490 - Titan Industries</li>
+                        <li>INV-4491 - Unity Solutions</li>
+                        <li>INV-4492 - Vertex Tech</li>
+                        <li>INV-4493 - Wave Systems</li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="card">
+                <p><a href="helpdesk-log.html">← Back to Helpdesk Log</a> | <a href="invoices.html">View Invoice Comparison →</a></p>
+            </article>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="wrap">
+            <p>Internal Document - TechNova Systems</p>
+            <p class="small">Server Log Extract - Confidential</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/chatbot.js"></script>
+</body>
+</html>

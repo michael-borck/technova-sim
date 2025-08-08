@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Memo - Internal | TechNova Systems</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .memo-header {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .memo-field {
+            display: flex;
+            margin-bottom: 0.5rem;
+        }
+        .memo-field strong {
+            min-width: 100px;
+        }
+        .priority-high {
+            display: inline-block;
+            background: #dc3545;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .recommendation {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .impact-assessment {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="wrap">
+            <a href="../index.html" class="logo">
+                <span>TechNova Systems</span>
+            </a>
+            <nav class="nav">
+                <a href="../index.html">Home</a>
+                <a href="../press.html">Press</a>
+                <a href="helpdesk-log.html">Helpdesk Log</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="wrap">
+            <div class="internal-header">
+                INTERNAL MEMORANDUM - CONFIDENTIAL
+            </div>
+
+            <article class="card">
+                <div class="memo-header">
+                    <div class="memo-field">
+                        <strong>TO:</strong>
+                        <span>Executive Team, Board of Directors</span>
+                    </div>
+                    <div class="memo-field">
+                        <strong>FROM:</strong>
+                        <span>Michael Torres, Head of Security</span>
+                    </div>
+                    <div class="memo-field">
+                        <strong>DATE:</strong>
+                        <span>November 15, 2024 - 10:45 AM</span>
+                    </div>
+                    <div class="memo-field">
+                        <strong>RE:</strong>
+                        <span>Security Incident - Credential Theft via Phishing Attack</span>
+                    </div>
+                    <div class="memo-field">
+                        <strong>PRIORITY:</strong>
+                        <span class="priority-high">HIGH - IMMEDIATE ACTION REQUIRED</span>
+                    </div>
+                </div>
+
+                <h2>Executive Summary</h2>
+                <p>At approximately 9:00 AM this morning, TechNova Systems experienced a targeted phishing attack resulting in credential theft and unauthorized access to customer invoice data. This memo outlines the incident, impact assessment, and recommended immediate actions.</p>
+
+                <h2>Incident Details</h2>
+                <ul>
+                    <li><strong>Attack Vector:</strong> Sophisticated phishing email masquerading as CloudSafe backup renewal</li>
+                    <li><strong>Compromised Account:</strong> Sarah Mitchell (Accounts Department)</li>
+                    <li><strong>Time of Compromise:</strong> 9:12 AM, November 15, 2024</li>
+                    <li><strong>Attacker IP Address:</strong> 203.0.113.45 (geo-location: Eastern Europe)</li>
+                    <li><strong>Data Accessed:</strong> 23 customer invoice PDF files</li>
+                    <li><strong>Attack Duration:</strong> 14 minutes (10:01 AM - 10:15 AM)</li>
+                </ul>
+
+                <div class="impact-assessment">
+                    <h2>Impact Assessment</h2>
+                    <p><strong>CONFIRMED IMPACTS:</strong></p>
+                    <ul>
+                        <li>23 customer invoices were downloaded by unauthorized party</li>
+                        <li>At least 5 customers have received modified invoices with fraudulent bank details</li>
+                        <li>2 customers confirmed payments totaling $8,750 to fraudulent accounts</li>
+                        <li>Potential for additional customers to be affected (investigation ongoing)</li>
+                        <li>Significant reputational damage risk</li>
+                        <li>Possible regulatory compliance violations (data breach notification requirements)</li>
+                    </ul>
+                </div>
+
+                <h2>Attack Timeline</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Event</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>9:02 AM</td>
+                            <td>Phishing email sent to all-staff distribution list</td>
+                        </tr>
+                        <tr>
+                            <td>9:12 AM</td>
+                            <td>Sarah Mitchell clicks link and enters credentials</td>
+                        </tr>
+                        <tr>
+                            <td>9:26 AM</td>
+                            <td>First customer complaint about altered invoice</td>
+                        </tr>
+                        <tr>
+                            <td>9:40 AM</td>
+                            <td>Sarah's password reset; sessions terminated</td>
+                        </tr>
+                        <tr>
+                            <td>10:01 AM</td>
+                            <td>Unauthorized access to invoice directory begins</td>
+                        </tr>
+                        <tr>
+                            <td>10:15 AM</td>
+                            <td>Unauthorized access ends; 23 files exfiltrated</td>
+                        </tr>
+                        <tr>
+                            <td>10:45 AM</td>
+                            <td>Incident response team activated</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="recommendation">
+                    <h2>Immediate Recommendations</h2>
+                    <ol>
+                        <li><strong>COMPLETE - Password Reset:</strong> Force password reset for ALL user accounts (completed 10:30 AM)</li>
+                        <li><strong>URGENT - Customer Notification:</strong> Contact all customers whose invoices were accessed</li>
+                        <li><strong>URGENT - Bank Notification:</strong> Alert banks about fraudulent accounts</li>
+                        <li><strong>TODAY - Implement MFA:</strong> Enable multi-factor authentication for all accounts</li>
+                        <li><strong>TODAY - Email Filtering:</strong> Update email filters to block spoofed domains</li>
+                        <li><strong>THIS WEEK - Security Training:</strong> Mandatory phishing awareness training for all staff</li>
+                        <li><strong>THIS WEEK - Audit:</strong> Complete security audit of all systems</li>
+                    </ol>
+                </div>
+
+                <h2>Long-term Security Improvements</h2>
+                <ul>
+                    <li>Implement DMARC, SPF, and DKIM for all email domains</li>
+                    <li>Deploy advanced email threat protection solution</li>
+                    <li>Regular phishing simulation exercises</li>
+                    <li>Implement principle of least privilege for file access</li>
+                    <li>Deploy EDR (Endpoint Detection and Response) solution</li>
+                    <li>Create and test incident response playbooks</li>
+                </ul>
+
+                <h2>Legal and Compliance Considerations</h2>
+                <p>We must notify affected customers within 72 hours per data breach regulations. Our legal team should be engaged immediately to ensure compliance with:</p>
+                <ul>
+                    <li>Australian Privacy Act (Notifiable Data Breaches scheme)</li>
+                    <li>Industry-specific regulations</li>
+                    <li>Contractual obligations to customers</li>
+                </ul>
+
+                <h2>Lessons Learned</h2>
+                <p>This incident highlights critical gaps in our security posture:</p>
+                <ul>
+                    <li>Lack of MFA allowed single-factor credential theft</li>
+                    <li>Insufficient email filtering missed obvious phishing indicators</li>
+                    <li>No rate limiting on file server access</li>
+                    <li>Limited security awareness among non-technical staff</li>
+                </ul>
+
+                <div class="alert alert-danger">
+                    <strong>ACTION REQUIRED:</strong> Executive approval needed for emergency security budget of $45,000 to implement immediate security improvements. Board meeting scheduled for 2:00 PM today.
+                </div>
+
+                <p><strong>Prepared by:</strong> Michael Torres, CISSP, CISM<br>
+                Head of Security<br>
+                TechNova Systems</p>
+
+                <p class="small">Distribution: CEO, CTO, CFO, Board of Directors, Legal Counsel<br>
+                Classification: Confidential - Internal Use Only</p>
+            </article>
+
+            <article class="card">
+                <h2>Supporting Evidence</h2>
+                <ul>
+                    <li><a href="phishing-email.html">Original phishing email</a></li>
+                    <li><a href="access-log.html">Server access logs</a></li>
+                    <li><a href="invoices.html">Comparison of legitimate vs fraudulent invoices</a></li>
+                    <li><a href="helpdesk-log.html">Complete helpdesk incident log</a></li>
+                </ul>
+            </article>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="wrap">
+            <p>Internal Memorandum - TechNova Systems</p>
+            <p class="small">Confidential - Executive Distribution Only</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/chatbot.js"></script>
+</body>
+</html>

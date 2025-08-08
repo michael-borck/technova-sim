@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpdesk Updates - Internal | TechNova Systems</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="wrap">
+            <a href="../index.html" class="logo">
+                <span>TechNova Systems</span>
+            </a>
+            <nav class="nav">
+                <a href="../index.html">Home</a>
+                <a href="../press.html">Press</a>
+                <a href="../faq.html">Customer FAQ</a>
+                <a href="../staff-portal.html">Staff Portal</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="wrap">
+            <div class="internal-header">
+                INTERNAL DOCUMENT - CONFIDENTIAL
+            </div>
+
+            <article class="card">
+                <h1>Helpdesk Log - November 15, 2024</h1>
+                <p class="small">IT Support Ticket System - Morning Incident Timeline</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Ticket #</th>
+                            <th>User</th>
+                            <th>Issue Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>09:12 AM</strong></td>
+                            <td>HD-4471</td>
+                            <td>Sarah Mitchell (Accounts)</td>
+                            <td>Received "Cloud Backup Renewal" email - clicked link - now can't log in. Says password not working after entering it on renewal site.</td>
+                            <td>Escalated</td>
+                        </tr>
+                        <tr>
+                            <td><strong>09:18 AM</strong></td>
+                            <td>HD-4472</td>
+                            <td>James Chen (Sales)</td>
+                            <td>Got same backup renewal email. Looks suspicious - domain is "tecknova.com" (missing 'h')</td>
+                            <td>Noted</td>
+                        </tr>
+                        <tr>
+                            <td><strong>09:26 AM</strong></td>
+                            <td>HD-4473</td>
+                            <td>External Customer</td>
+                            <td>Received invoice #INV-4486 with different bank details than usual. BSB changed to 033-547.</td>
+                            <td>Critical</td>
+                        </tr>
+                        <tr>
+                            <td><strong>09:28 AM</strong></td>
+                            <td>HD-4474</td>
+                            <td>External Customer</td>
+                            <td>Invoice has wrong bank account. Already paid $3,400 to new account!</td>
+                            <td>Critical</td>
+                        </tr>
+                        <tr>
+                            <td><strong>09:32 AM</strong></td>
+                            <td>HD-4475</td>
+                            <td>External Customer</td>
+                            <td>Invoice formatting looks different. Bank: ANZ instead of Commonwealth.</td>
+                            <td>Critical</td>
+                        </tr>
+                        <tr>
+                            <td><strong>09:40 AM</strong></td>
+                            <td>HD-4476</td>
+                            <td>IT Support</td>
+                            <td>Password reset completed for Sarah Mitchell. Forced logout all sessions.</td>
+                            <td>Resolved</td>
+                        </tr>
+                        <tr>
+                            <td><strong>09:45 AM</strong></td>
+                            <td>HD-4477</td>
+                            <td>Security Team</td>
+                            <td>ALERT: Multiple customer complaints about altered invoices. Initiating incident response.</td>
+                            <td>In Progress</td>
+                        </tr>
+                        <tr>
+                            <td><strong>10:05 AM</strong></td>
+                            <td>HD-4478</td>
+                            <td>Security Audit</td>
+                            <td>File server audit shows 23 invoice PDFs accessed from IP 203.0.113.45 between 10:01-10:15 AM. See <a href="access-log.html">access log</a>.</td>
+                            <td>Investigating</td>
+                        </tr>
+                        <tr>
+                            <td><strong>10:15 AM</strong></td>
+                            <td>HD-4479</td>
+                            <td>Michael Torres (Security)</td>
+                            <td>Confirmed: Phishing email led to credential theft. Attacker accessed invoice directory. <a href="memo.html">Security memo drafted</a>.</td>
+                            <td>Confirmed</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+
+            <article class="card">
+                <h2>Key Evidence Links</h2>
+                <ul>
+                    <li><a href="phishing-email.html">View the phishing email</a> that started the incident</li>
+                    <li><a href="access-log.html">Server access logs</a> showing unauthorized file access</li>
+                    <li><a href="invoices.html">Comparison of real vs fake invoices</a></li>
+                    <li><a href="memo.html">Security team's internal memo</a> to management</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <h2>Notes from IT Support</h2>
+                <p><strong>Dave Wilson (IT Support Lead):</strong></p>
+                <p>"The phishing email was very convincing. It used our company colors and looked like it came from CloudSafe, our actual backup provider. The link went to 'backups-secure.net' which looked legitimate but was actually a credential harvesting site."</p>
+                <p>"Sarah entered her credentials thinking it was the real CloudSafe portal. The attacker then used her account to access the shared drive where we store customer invoices. They downloaded 23 files and appear to have modified them with different bank details."</p>
+                <p class="hint">Check with the chat support staff for more details about what they observed.</p>
+            </article>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="wrap">
+            <p>Internal Document - TechNova Systems</p>
+            <p class="small">Confidential - Do Not Distribute</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/chatbot.js"></script>
+</body>
+</html>
