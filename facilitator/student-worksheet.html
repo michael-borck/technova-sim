@@ -10,395 +10,966 @@
             padding: 0;
             box-sizing: border-box;
         }
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header .subtitle {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .team-info {
+            background: #34495e;
+            padding: 1rem 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .team-info input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.5rem;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 4px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .team-info input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .tabs {
+            display: flex;
+            background: #ecf0f1;
+            overflow-x: auto;
+            border-bottom: 3px solid #3498db;
+        }
+        
+        .tab {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #7f8c8d;
+            transition: all 0.3s;
+            white-space: nowrap;
+            position: relative;
+        }
+        
+        .tab:hover {
+            background: rgba(52, 152, 219, 0.1);
+            color: #2c3e50;
+        }
+        
+        .tab.active {
+            color: #2c3e50;
             background: white;
         }
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #3498db;
         }
+        
+        .tab.completed::before {
+            content: '✓';
+            color: #27ae60;
+            margin-right: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .content {
+            padding: 2rem;
+            min-height: 500px;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
         h2 {
-            color: #34495e;
-            margin-top: 25px;
-            margin-bottom: 15px;
-            background: #ecf0f1;
-            padding: 8px;
-            border-left: 4px solid #3498db;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #ecf0f1;
         }
+        
         h3 {
             color: #34495e;
-            margin-top: 15px;
-            margin-bottom: 10px;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
         }
-        .team-info {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        .team-info input {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
+        
         .evidence-checklist {
-            margin: 15px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.5rem;
+            margin: 1rem 0;
         }
+        
         .evidence-checklist label {
-            display: block;
-            margin: 8px 0;
-            padding: 8px;
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
             background: #f8f9fa;
-            border-radius: 4px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .evidence-checklist label:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .evidence-checklist input[type="checkbox"] {
+            margin-right: 0.75rem;
+            width: 18px;
+            height: 18px;
             cursor: pointer;
         }
-        .evidence-checklist input[type="checkbox"] {
-            margin-right: 10px;
+        
+        .evidence-checklist input[type="checkbox"]:checked + span {
+            text-decoration: line-through;
+            opacity: 0.7;
         }
+        
         .timeline-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 15px 0;
+            margin: 1rem 0;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .timeline-table th,
-        .timeline-table td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
+        
         .timeline-table th {
             background: #3498db;
             color: white;
+            padding: 0.75rem;
+            text-align: left;
         }
+        
+        .timeline-table td {
+            border: 1px solid #ecf0f1;
+            padding: 0.75rem;
+        }
+        
         .timeline-table input {
             width: 100%;
             border: none;
-            padding: 5px;
+            padding: 0.5rem;
             background: transparent;
+            font-family: inherit;
         }
+        
+        .timeline-table input:focus {
+            outline: 2px solid #3498db;
+            background: #f8f9fa;
+        }
+        
+        .question-box {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .question-box h3 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
         .text-area {
             width: 100%;
-            min-height: 100px;
-            padding: 10px;
+            min-height: 120px;
+            padding: 0.75rem;
             border: 1px solid #ddd;
-            border-radius: 4px;
-            margin: 10px 0;
-            font-family: Arial, sans-serif;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            resize: vertical;
         }
-        .question-box {
-            background: #fff;
-            border: 2px solid #3498db;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 15px 0;
+        
+        .text-area:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
+        
         .tips-box {
             background: #fff3cd;
             border: 1px solid #ffc107;
             border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
+            padding: 1rem;
+            margin: 1rem 0;
         }
+        
         .tips-box h3 {
             color: #856404;
+            margin-top: 0;
         }
-        .red-flag {
-            color: #e74c3c;
-            font-weight: bold;
+        
+        .progress-indicator {
+            background: #ecf0f1;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #ddd;
         }
-        .print-only {
-            display: none;
+        
+        .progress-bar {
+            flex: 1;
+            height: 8px;
+            background: #ddd;
+            border-radius: 4px;
+            margin-right: 1rem;
+            overflow: hidden;
         }
-        @media print {
-            .no-print {
-                display: none;
-            }
-            .print-only {
-                display: block;
-            }
-            body {
-                max-width: 100%;
-            }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            width: 0%;
+            transition: width 0.3s;
         }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #ecf0f1;
+        }
+        
+        .nav-btn {
+            padding: 0.75rem 1.5rem;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .nav-btn.next {
+            background: #27ae60;
+        }
+        
+        .nav-btn.next:hover {
+            background: #229954;
+        }
+        
         .rating-scale {
             display: flex;
-            gap: 15px;
-            margin: 10px 0;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
         }
+        
         .rating-scale label {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .rating-scale label:hover {
+            background: #e9ecef;
+        }
+        
+        .rating-scale input[type="radio"]:checked + span {
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .action-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+        }
+        
+        .float-btn {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            color: #2c3e50;
+            border: 2px solid #3498db;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s;
+        }
+        
+        .float-btn:hover {
+            background: #3498db;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        
+        .save-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 0.5rem 1rem;
+            background: #27ae60;
+            color: white;
+            border-radius: 6px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+        
+        .save-indicator.show {
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .tabs {
+                overflow-x: scroll;
+            }
+            
+            .tab {
+                font-size: 0.85rem;
+                padding: 0.75rem 1rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .evidence-checklist {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+            
+            .tabs, .nav-buttons, .action-buttons, .save-indicator {
+                display: none;
+            }
+            
+            .tab-content {
+                display: block !important;
+                page-break-after: always;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>TechNova Security Incident - Investigation Worksheet</h1>
-    
-    <div class="team-info">
-        <h3>Team Information</h3>
-        <input type="text" placeholder="Team Name" id="team-name">
-        <input type="text" placeholder="Team Members (comma separated)" id="team-members">
-        <input type="text" placeholder="Date" id="investigation-date" value="">
-    </div>
-
-    <div class="tips-box">
-        <h3>🔍 Investigation Tips</h3>
-        <ul>
-            <li>Start at the company homepage and look for any notices or alerts</li>
-            <li>Check the press release and FAQ for official information</li>
-            <li>Use the chat feature to interview different employees</li>
-            <li>Look for links to internal documents and evidence</li>
-            <li>Pay attention to dates, times, and specific details</li>
-        </ul>
-    </div>
-
-    <h2>Part 1: Evidence Collection</h2>
-    
-    <div class="evidence-checklist">
-        <h3>Check off evidence as you find it:</h3>
-        <label><input type="checkbox"> Company press release</label>
-        <label><input type="checkbox"> Customer FAQ with warnings</label>
-        <label><input type="checkbox"> Staff portal with system notifications</label>
-        <label><input type="checkbox"> Helpdesk incident log</label>
-        <label><input type="checkbox"> The phishing email</label>
-        <label><input type="checkbox"> Real vs fake invoice comparison</label>
-        <label><input type="checkbox"> Server access logs</label>
-        <label><input type="checkbox"> Security officer's memo</label>
-    </div>
-
-    <h2>Part 2: Timeline Construction</h2>
-    <p>Fill in the timeline of events based on your investigation:</p>
-    
-    <table class="timeline-table">
-        <thead>
-            <tr>
-                <th>Time</th>
-                <th>Event</th>
-                <th>Source of Information</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>9:02 AM</td>
-                <td><input type="text" placeholder="What happened first?"></td>
-                <td><input type="text" placeholder="Where did you find this?"></td>
-            </tr>
-            <tr>
-                <td>9:12 AM</td>
-                <td><input type="text" placeholder="What happened next?"></td>
-                <td><input type="text" placeholder="Source?"></td>
-            </tr>
-            <tr>
-                <td>9:26 AM</td>
-                <td><input type="text" placeholder="Then what?"></td>
-                <td><input type="text" placeholder="Source?"></td>
-            </tr>
-            <tr>
-                <td>10:01 AM</td>
-                <td><input type="text" placeholder="What started happening?"></td>
-                <td><input type="text" placeholder="Source?"></td>
-            </tr>
-            <tr>
-                <td>10:15 AM</td>
-                <td><input type="text" placeholder="How did it end?"></td>
-                <td><input type="text" placeholder="Source?"></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h2>Part 3: Attack Analysis</h2>
-    
-    <div class="question-box">
-        <h3>1. What type of attack was this?</h3>
-        <textarea class="text-area" placeholder="Describe the type of cyber attack used..."></textarea>
-    </div>
-    
-    <div class="question-box">
-        <h3>2. How did the attacker gain access?</h3>
-        <textarea class="text-area" placeholder="Explain step-by-step how the attacker got in..."></textarea>
-    </div>
-    
-    <div class="question-box">
-        <h3>3. What were the red flags in the phishing email?</h3>
-        <p>List at least 5 suspicious elements:</p>
-        <textarea class="text-area" placeholder="1. &#10;2. &#10;3. &#10;4. &#10;5. "></textarea>
-    </div>
-    
-    <div class="question-box">
-        <h3>4. What data was compromised?</h3>
-        <textarea class="text-area" placeholder="List what information was stolen or accessed..."></textarea>
-    </div>
-
-    <h2>Part 4: Impact Assessment</h2>
-    
-    <div class="question-box">
-        <h3>1. Who was affected by this incident?</h3>
-        <textarea class="text-area" placeholder="List all affected parties (employees, customers, etc.)..."></textarea>
-    </div>
-    
-    <div class="question-box">
-        <h3>2. What is the financial impact?</h3>
-        <textarea class="text-area" placeholder="Calculate or estimate the financial losses..."></textarea>
-    </div>
-    
-    <div class="question-box">
-        <h3>3. What are the non-financial impacts?</h3>
-        <textarea class="text-area" placeholder="Consider reputation, trust, operations..."></textarea>
-    </div>
-
-    <h2>Part 5: Recommendations</h2>
-    
-    <div class="question-box">
-        <h3>1. Immediate Actions (Within 24 hours)</h3>
-        <textarea class="text-area" placeholder="What should TechNova do RIGHT NOW?&#10;1. &#10;2. &#10;3. "></textarea>
-    </div>
-    
-    <div class="question-box">
-        <h3>2. Short-term Improvements (Within 1 month)</h3>
-        <textarea class="text-area" placeholder="What security measures should be implemented soon?&#10;1. &#10;2. &#10;3. "></textarea>
-    </div>
-    
-    <div class="question-box">
-        <h3>3. Long-term Strategy (Within 1 year)</h3>
-        <textarea class="text-area" placeholder="What systemic changes are needed?&#10;1. &#10;2. &#10;3. "></textarea>
-    </div>
-
-    <h2>Part 6: Employee Interview Notes</h2>
-    <p>Record key information from your chats with TechNova employees:</p>
-    
-    <div class="question-box">
-        <h3>IT Support Analyst</h3>
-        <textarea class="text-area" placeholder="What did you learn from the IT analyst?"></textarea>
-    </div>
-    
-    <div class="question-box">
-        <h3>Accounts Clerk (Sarah)</h3>
-        <textarea class="text-area" placeholder="What did Sarah tell you?"></textarea>
-    </div>
-    
-    <div class="question-box">
-        <h3>Security Officer</h3>
-        <textarea class="text-area" placeholder="What insights did the security officer provide?"></textarea>
-    </div>
-    
-    <div class="question-box">
-        <h3>CEO</h3>
-        <textarea class="text-area" placeholder="What are the CEO's concerns?"></textarea>
-    </div>
-
-    <h2>Part 7: Lessons Learned</h2>
-    
-    <div class="question-box">
-        <h3>1. How could this attack have been prevented?</h3>
-        <textarea class="text-area" placeholder="List prevention measures..."></textarea>
-    </div>
-    
-    <div class="question-box">
-        <h3>2. What should employees be trained to recognize?</h3>
-        <textarea class="text-area" placeholder="Key warning signs to watch for..."></textarea>
-    </div>
-    
-    <div class="question-box">
-        <h3>3. Why do you think Sarah fell for the phishing email?</h3>
-        <textarea class="text-area" placeholder="Consider human factors..."></textarea>
-    </div>
-
-    <h2>Part 8: Executive Summary</h2>
-    <p>Write a brief (200-300 word) summary of the incident for the Board of Directors:</p>
-    
-    <div class="question-box">
-        <textarea class="text-area" style="min-height: 200px;" placeholder="Executive Summary:&#10;&#10;On November 15, 2024, TechNova Systems experienced..."></textarea>
-    </div>
-
-    <h2>Part 9: Team Reflection</h2>
-    
-    <div class="question-box">
-        <h3>How well did your team work together?</h3>
-        <div class="rating-scale">
-            <label><input type="radio" name="teamwork" value="1"> 1 - Poor</label>
-            <label><input type="radio" name="teamwork" value="2"> 2 - Fair</label>
-            <label><input type="radio" name="teamwork" value="3"> 3 - Good</label>
-            <label><input type="radio" name="teamwork" value="4"> 4 - Very Good</label>
-            <label><input type="radio" name="teamwork" value="5"> 5 - Excellent</label>
+    <div class="container">
+        <div class="header">
+            <h1>🔒 TechNova Security Incident Investigation</h1>
+            <div class="subtitle">Cybersecurity Incident Response Worksheet</div>
+        </div>
+        
+        <div class="team-info">
+            <input type="text" id="team-name" placeholder="Team Name">
+            <input type="text" id="team-members" placeholder="Team Members">
+            <input type="text" id="investigation-date" placeholder="Date">
+        </div>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('overview')">📋 Overview</button>
+            <button class="tab" onclick="showTab('evidence')">🔍 Evidence</button>
+            <button class="tab" onclick="showTab('timeline')">⏰ Timeline</button>
+            <button class="tab" onclick="showTab('analysis')">🔬 Analysis</button>
+            <button class="tab" onclick="showTab('impact')">💥 Impact</button>
+            <button class="tab" onclick="showTab('interviews')">💬 Interviews</button>
+            <button class="tab" onclick="showTab('recommendations')">🛡️ Recommendations</button>
+            <button class="tab" onclick="showTab('lessons')">📚 Lessons</button>
+            <button class="tab" onclick="showTab('summary')">📝 Summary</button>
+            <button class="tab" onclick="showTab('reflection')">🤔 Reflection</button>
+        </div>
+        
+        <div class="content">
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <h2>Investigation Overview</h2>
+                
+                <div class="tips-box">
+                    <h3>🎯 Your Mission</h3>
+                    <p>You are investigating a security breach at TechNova Systems. Your goal is to:</p>
+                    <ul>
+                        <li>Discover what type of attack occurred</li>
+                        <li>Understand how the attackers gained access</li>
+                        <li>Determine what data was compromised</li>
+                        <li>Assess the impact on the company</li>
+                        <li>Recommend security improvements</li>
+                    </ul>
+                </div>
+                
+                <div class="tips-box" style="background: #e8f5e9; border-color: #4caf50;">
+                    <h3>💡 Investigation Tips</h3>
+                    <ul>
+                        <li>Start at the company homepage - look for notices</li>
+                        <li>Check the press release and FAQ sections</li>
+                        <li>Use the chat button to interview employees</li>
+                        <li>Look for links to internal documents</li>
+                        <li>Pay attention to timestamps and details</li>
+                        <li>Different employees know different things</li>
+                    </ul>
+                </div>
+                
+                <div class="question-box">
+                    <h3>Initial Observations</h3>
+                    <p>What did you first notice when visiting the TechNova website?</p>
+                    <textarea class="text-area" placeholder="Describe your initial observations..."></textarea>
+                </div>
+            </div>
+            
+            <!-- Evidence Tab -->
+            <div id="evidence" class="tab-content">
+                <h2>Part 1: Evidence Collection</h2>
+                <p>Check off each piece of evidence as you discover it during your investigation:</p>
+                
+                <div class="evidence-checklist">
+                    <label>
+                        <input type="checkbox" onchange="updateProgress()">
+                        <span>Company press release</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" onchange="updateProgress()">
+                        <span>Customer FAQ with warnings</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" onchange="updateProgress()">
+                        <span>Staff portal notifications</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" onchange="updateProgress()">
+                        <span>Helpdesk incident log</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" onchange="updateProgress()">
+                        <span>The phishing email</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" onchange="updateProgress()">
+                        <span>Invoice comparison (real vs fake)</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" onchange="updateProgress()">
+                        <span>Server access logs</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" onchange="updateProgress()">
+                        <span>Security officer's memo</span>
+                    </label>
+                </div>
+                
+                <div class="question-box">
+                    <h3>Evidence Notes</h3>
+                    <p>What key information did you find in each piece of evidence?</p>
+                    <textarea class="text-area" placeholder="List your findings from each evidence source..." style="min-height: 200px;"></textarea>
+                </div>
+            </div>
+            
+            <!-- Timeline Tab -->
+            <div id="timeline" class="tab-content">
+                <h2>Part 2: Timeline Construction</h2>
+                <p>Reconstruct the sequence of events based on your investigation:</p>
+                
+                <table class="timeline-table">
+                    <thead>
+                        <tr>
+                            <th width="15%">Time</th>
+                            <th width="50%">Event</th>
+                            <th width="35%">Source</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>9:02 AM</td>
+                            <td><input type="text" placeholder="What happened first?"></td>
+                            <td><input type="text" placeholder="Where did you find this?"></td>
+                        </tr>
+                        <tr>
+                            <td>9:12 AM</td>
+                            <td><input type="text" placeholder="What happened next?"></td>
+                            <td><input type="text" placeholder="Source?"></td>
+                        </tr>
+                        <tr>
+                            <td>9:26 AM</td>
+                            <td><input type="text" placeholder="Then what?"></td>
+                            <td><input type="text" placeholder="Source?"></td>
+                        </tr>
+                        <tr>
+                            <td>9:40 AM</td>
+                            <td><input type="text" placeholder="What action was taken?"></td>
+                            <td><input type="text" placeholder="Source?"></td>
+                        </tr>
+                        <tr>
+                            <td>10:01 AM</td>
+                            <td><input type="text" placeholder="What started happening?"></td>
+                            <td><input type="text" placeholder="Source?"></td>
+                        </tr>
+                        <tr>
+                            <td>10:15 AM</td>
+                            <td><input type="text" placeholder="How did it end?"></td>
+                            <td><input type="text" placeholder="Source?"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="question-box">
+                    <h3>Timeline Analysis</h3>
+                    <p>What patterns do you notice in the timeline? How long did the attack take?</p>
+                    <textarea class="text-area" placeholder="Analyze the timeline patterns..."></textarea>
+                </div>
+            </div>
+            
+            <!-- Analysis Tab -->
+            <div id="analysis" class="tab-content">
+                <h2>Part 3: Attack Analysis</h2>
+                
+                <div class="question-box">
+                    <h3>1. What type of attack was this?</h3>
+                    <textarea class="text-area" placeholder="Describe the type of cyber attack used..."></textarea>
+                </div>
+                
+                <div class="question-box">
+                    <h3>2. How did the attacker gain access?</h3>
+                    <textarea class="text-area" placeholder="Explain step-by-step how the attacker got in..."></textarea>
+                </div>
+                
+                <div class="question-box">
+                    <h3>3. Red flags in the phishing email</h3>
+                    <p>List at least 5 suspicious elements you identified:</p>
+                    <textarea class="text-area" placeholder="1. &#10;2. &#10;3. &#10;4. &#10;5. "></textarea>
+                </div>
+                
+                <div class="question-box">
+                    <h3>4. What data was compromised?</h3>
+                    <textarea class="text-area" placeholder="List what information was stolen or accessed..."></textarea>
+                </div>
+            </div>
+            
+            <!-- Impact Tab -->
+            <div id="impact" class="tab-content">
+                <h2>Part 4: Impact Assessment</h2>
+                
+                <div class="question-box">
+                    <h3>1. Who was affected?</h3>
+                    <textarea class="text-area" placeholder="List all affected parties (employees, customers, company)..."></textarea>
+                </div>
+                
+                <div class="question-box">
+                    <h3>2. Financial impact</h3>
+                    <textarea class="text-area" placeholder="Calculate or estimate the financial losses..."></textarea>
+                </div>
+                
+                <div class="question-box">
+                    <h3>3. Non-financial impacts</h3>
+                    <textarea class="text-area" placeholder="Consider reputation, trust, operations, compliance..."></textarea>
+                </div>
+                
+                <div class="question-box">
+                    <h3>4. Risk assessment</h3>
+                    <p>Rate the severity of this incident:</p>
+                    <div class="rating-scale">
+                        <label><input type="radio" name="severity" value="1"><span>Low</span></label>
+                        <label><input type="radio" name="severity" value="2"><span>Medium</span></label>
+                        <label><input type="radio" name="severity" value="3"><span>High</span></label>
+                        <label><input type="radio" name="severity" value="4"><span>Critical</span></label>
+                    </div>
+                    <textarea class="text-area" placeholder="Justify your severity rating..."></textarea>
+                </div>
+            </div>
+            
+            <!-- Interviews Tab -->
+            <div id="interviews" class="tab-content">
+                <h2>Part 5: Employee Interviews</h2>
+                <p>Record key information from your conversations with TechNova employees:</p>
+                
+                <div class="question-box">
+                    <h3>💻 IT Support Analyst (Dave)</h3>
+                    <textarea class="text-area" placeholder="What did you learn from the IT analyst?"></textarea>
+                </div>
+                
+                <div class="question-box">
+                    <h3>📧 Accounts Clerk (Sarah)</h3>
+                    <textarea class="text-area" placeholder="What did Sarah tell you about the incident?"></textarea>
+                </div>
+                
+                <div class="question-box">
+                    <h3>🔒 Security Officer (Michael)</h3>
+                    <textarea class="text-area" placeholder="What insights did the security officer provide?"></textarea>
+                </div>
+                
+                <div class="question-box">
+                    <h3>👔 CEO (James)</h3>
+                    <textarea class="text-area" placeholder="What are the CEO's main concerns?"></textarea>
+                </div>
+            </div>
+            
+            <!-- Recommendations Tab -->
+            <div id="recommendations" class="tab-content">
+                <h2>Part 6: Security Recommendations</h2>
+                
+                <div class="question-box">
+                    <h3>🚨 Immediate Actions (Within 24 hours)</h3>
+                    <textarea class="text-area" placeholder="What should TechNova do RIGHT NOW?&#10;1. &#10;2. &#10;3. "></textarea>
+                </div>
+                
+                <div class="question-box">
+                    <h3>📅 Short-term Improvements (Within 1 month)</h3>
+                    <textarea class="text-area" placeholder="What security measures should be implemented soon?&#10;1. &#10;2. &#10;3. "></textarea>
+                </div>
+                
+                <div class="question-box">
+                    <h3>🎯 Long-term Strategy (Within 1 year)</h3>
+                    <textarea class="text-area" placeholder="What systemic changes are needed?&#10;1. &#10;2. &#10;3. "></textarea>
+                </div>
+                
+                <div class="question-box">
+                    <h3>💰 Budget Priorities</h3>
+                    <p>If you had $45,000 to spend on security, how would you allocate it?</p>
+                    <textarea class="text-area" placeholder="List your budget priorities and estimated costs..."></textarea>
+                </div>
+            </div>
+            
+            <!-- Lessons Tab -->
+            <div id="lessons" class="tab-content">
+                <h2>Part 7: Lessons Learned</h2>
+                
+                <div class="question-box">
+                    <h3>1. How could this attack have been prevented?</h3>
+                    <textarea class="text-area" placeholder="List prevention measures that would have stopped this attack..."></textarea>
+                </div>
+                
+                <div class="question-box">
+                    <h3>2. What should employees be trained to recognize?</h3>
+                    <textarea class="text-area" placeholder="Key warning signs and red flags to watch for..."></textarea>
+                </div>
+                
+                <div class="question-box">
+                    <h3>3. Human factors analysis</h3>
+                    <p>Why do you think Sarah fell for the phishing email?</p>
+                    <textarea class="text-area" placeholder="Consider psychological and situational factors..."></textarea>
+                </div>
+                
+                <div class="question-box">
+                    <h3>4. Best practices</h3>
+                    <p>What are the top 5 security practices every company should follow?</p>
+                    <textarea class="text-area" placeholder="1. &#10;2. &#10;3. &#10;4. &#10;5. "></textarea>
+                </div>
+            </div>
+            
+            <!-- Summary Tab -->
+            <div id="summary" class="tab-content">
+                <h2>Part 8: Executive Summary</h2>
+                <p>Write a professional summary of the incident for the Board of Directors (200-300 words):</p>
+                
+                <div class="question-box">
+                    <textarea class="text-area" style="min-height: 300px;" placeholder="Executive Summary:&#10;&#10;On November 15, 2024, TechNova Systems experienced a security incident...&#10;&#10;[Include: What happened, How it happened, Impact, Response, Recommendations]"></textarea>
+                </div>
+                
+                <div class="question-box">
+                    <h3>Key Metrics</h3>
+                    <p>Fill in the critical numbers:</p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>⏱️ Total attack duration: <input type="text" style="width: 200px; margin-left: 10px;" placeholder="e.g., 14 minutes"></li>
+                        <li>📁 Files compromised: <input type="text" style="width: 200px; margin-left: 10px;" placeholder="e.g., 23 PDFs"></li>
+                        <li>💰 Financial loss: <input type="text" style="width: 200px; margin-left: 10px;" placeholder="e.g., $8,750"></li>
+                        <li>👥 Customers affected: <input type="text" style="width: 200px; margin-left: 10px;" placeholder="e.g., 23"></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Reflection Tab -->
+            <div id="reflection" class="tab-content">
+                <h2>Part 9: Team Reflection</h2>
+                
+                <div class="question-box">
+                    <h3>Team Performance</h3>
+                    <p>How well did your team work together?</p>
+                    <div class="rating-scale">
+                        <label><input type="radio" name="teamwork" value="1"><span>1 - Poor</span></label>
+                        <label><input type="radio" name="teamwork" value="2"><span>2 - Fair</span></label>
+                        <label><input type="radio" name="teamwork" value="3"><span>3 - Good</span></label>
+                        <label><input type="radio" name="teamwork" value="4"><span>4 - Very Good</span></label>
+                        <label><input type="radio" name="teamwork" value="5"><span>5 - Excellent</span></label>
+                    </div>
+                </div>
+                
+                <div class="question-box">
+                    <h3>Investigation Challenges</h3>
+                    <textarea class="text-area" placeholder="What was the most challenging part of the investigation?"></textarea>
+                </div>
+                
+                <div class="question-box">
+                    <h3>Key Takeaway</h3>
+                    <textarea class="text-area" placeholder="What was the most important thing you learned?"></textarea>
+                </div>
+                
+                <div class="question-box">
+                    <h3>Real-World Application</h3>
+                    <textarea class="text-area" placeholder="How could you apply what you learned to protect yourself or others online?"></textarea>
+                </div>
+                
+                <div class="tips-box" style="background: #e8f5e9; border-color: #27ae60; margin-top: 2rem;">
+                    <h3>✅ Submission Checklist</h3>
+                    <ul>
+                        <li>All evidence items found and checked</li>
+                        <li>Timeline completed with sources</li>
+                        <li>Attack analysis questions answered</li>
+                        <li>Impact assessment completed</li>
+                        <li>Interview notes recorded</li>
+                        <li>Recommendations provided</li>
+                        <li>Executive summary written</li>
+                        <li>Team reflection completed</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="progress-indicator">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <span id="progress-text">0% Complete</span>
         </div>
     </div>
     
-    <div class="question-box">
-        <h3>What was the most challenging part of the investigation?</h3>
-        <textarea class="text-area" placeholder="Describe challenges faced..."></textarea>
+    <div class="action-buttons">
+        <button class="float-btn" onclick="saveWork()">💾 Save</button>
+        <button class="float-btn" onclick="window.print()">🖨️ Print</button>
+        <button class="float-btn" onclick="clearWork()">🗑️ Clear</button>
     </div>
     
-    <div class="question-box">
-        <h3>What was the most interesting thing you learned?</h3>
-        <textarea class="text-area" placeholder="Share your key takeaway..."></textarea>
+    <div class="save-indicator" id="save-indicator">
+        ✓ Work saved
     </div>
-
-    <div class="tips-box" style="margin-top: 30px;">
-        <h3>📋 Submission Checklist</h3>
-        <ul>
-            <li>All evidence items checked off</li>
-            <li>Timeline completed with sources</li>
-            <li>All analysis questions answered</li>
-            <li>Recommendations provided for all timeframes</li>
-            <li>Interview notes recorded</li>
-            <li>Executive summary written</li>
-            <li>Team reflection completed</li>
-        </ul>
-    </div>
-
+    
     <script>
-        // Auto-save to localStorage
-        document.addEventListener('DOMContentLoaded', function() {
+        // Tab management
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active from all tab buttons
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Mark tab button as active
+            event.target.classList.add('active');
+            
+            // Save current tab
+            localStorage.setItem('technova_current_tab', tabName);
+            
+            // Update progress
+            updateProgress();
+        }
+        
+        // Progress tracking
+        function updateProgress() {
+            const inputs = document.querySelectorAll('input[type="text"], textarea, input[type="checkbox"]:checked, input[type="radio"]:checked');
+            const total = document.querySelectorAll('input[type="text"], textarea, input[type="checkbox"], input[type="radio"]').length;
+            let filled = 0;
+            
+            inputs.forEach(input => {
+                if (input.type === 'checkbox' || input.type === 'radio') {
+                    if (input.checked) filled++;
+                } else if (input.value.trim()) {
+                    filled++;
+                }
+            });
+            
+            const percentage = Math.round((filled / total) * 100);
+            document.getElementById('progress-fill').style.width = percentage + '%';
+            document.getElementById('progress-text').textContent = percentage + '% Complete';
+            
+            // Mark tabs as completed
+            updateTabCompletion();
+        }
+        
+        function updateTabCompletion() {
+            const tabs = ['evidence', 'timeline', 'analysis', 'impact', 'interviews', 'recommendations', 'lessons', 'summary', 'reflection'];
+            
+            tabs.forEach(tabName => {
+                const tabContent = document.getElementById(tabName);
+                const inputs = tabContent.querySelectorAll('input[type="text"], textarea');
+                let hasContent = false;
+                
+                inputs.forEach(input => {
+                    if (input.value.trim()) hasContent = true;
+                });
+                
+                const tabButton = Array.from(document.querySelectorAll('.tab')).find(tab => 
+                    tab.onclick && tab.onclick.toString().includes(tabName)
+                );
+                
+                if (tabButton && hasContent) {
+                    tabButton.classList.add('completed');
+                } else if (tabButton) {
+                    tabButton.classList.remove('completed');
+                }
+            });
+        }
+        
+        // Auto-save functionality
+        function setupAutoSave() {
             // Set today's date
             document.getElementById('investigation-date').value = new Date().toLocaleDateString();
             
             // Load saved data
             const inputs = document.querySelectorAll('input[type="text"], textarea');
             inputs.forEach(input => {
-                const saved = localStorage.getItem('technova_' + input.id || input.placeholder);
+                const key = 'technova_' + (input.id || input.placeholder);
+                const saved = localStorage.getItem(key);
                 if (saved) input.value = saved;
                 
                 // Save on change
                 input.addEventListener('input', function() {
-                    localStorage.setItem('technova_' + this.id || this.placeholder, this.value);
+                    localStorage.setItem(key, this.value);
+                    showSaveIndicator();
+                    updateProgress();
                 });
             });
             
-            // Save checkboxes and radio buttons
-            const checkboxes = document.querySelectorAll('input[type="checkbox"], input[type="radio"]');
-            checkboxes.forEach(cb => {
-                const saved = localStorage.getItem('technova_cb_' + cb.value);
-                if (saved === 'true') cb.checked = true;
+            // Handle checkboxes and radio buttons
+            const checkables = document.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+            checkables.forEach(input => {
+                const key = 'technova_check_' + (input.name || '') + '_' + input.value;
+                const saved = localStorage.getItem(key);
+                if (saved === 'true') input.checked = true;
                 
-                cb.addEventListener('change', function() {
-                    localStorage.setItem('technova_cb_' + this.value, this.checked);
+                input.addEventListener('change', function() {
+                    localStorage.setItem(key, this.checked);
+                    showSaveIndicator();
+                    updateProgress();
                 });
             });
-        });
-        
-        // Print function
-        function printWorksheet() {
-            window.print();
+            
+            // Restore last tab
+            const lastTab = localStorage.getItem('technova_current_tab');
+            if (lastTab && lastTab !== 'overview') {
+                const tabButton = Array.from(document.querySelectorAll('.tab')).find(tab => 
+                    tab.onclick && tab.onclick.toString().includes(lastTab)
+                );
+                if (tabButton) tabButton.click();
+            }
+            
+            // Initial progress update
+            updateProgress();
         }
+        
+        function showSaveIndicator() {
+            const indicator = document.getElementById('save-indicator');
+            indicator.classList.add('show');
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 2000);
+        }
+        
+        function saveWork() {
+            showSaveIndicator();
+        }
+        
+        function clearWork() {
+            if (confirm('Are you sure you want to clear all your work? This cannot be undone.')) {
+                // Clear all localStorage items for this worksheet
+                Object.keys(localStorage).forEach(key => {
+                    if (key.startsWith('technova_')) {
+                        localStorage.removeItem(key);
+                    }
+                });
+                location.reload();
+            }
+        }
+        
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            setupAutoSave();
+        });
     </script>
-    
-    <div class="no-print" style="margin-top: 30px; text-align: center;">
-        <button onclick="printWorksheet()" style="padding: 10px 20px; font-size: 16px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">
-            Print Worksheet
-        </button>
-        <button onclick="localStorage.clear(); location.reload();" style="padding: 10px 20px; font-size: 16px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">
-            Clear All Answers
-        </button>
-    </div>
 </body>
 </html>
