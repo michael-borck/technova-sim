@@ -23,9 +23,9 @@
         
         .briefing-container {
             background: white;
-            border-radius: 20px;
+            border-radius: 12px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 900px;
+            max-width: 1200px;
             width: 100%;
             overflow: hidden;
         }
@@ -59,8 +59,63 @@
             text-transform: uppercase;
         }
         
+        .tabs {
+            display: flex;
+            background: #ecf0f1;
+            overflow-x: auto;
+            border-bottom: 3px solid #3498db;
+        }
+        
+        .tab {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #7f8c8d;
+            transition: all 0.3s;
+            white-space: nowrap;
+            position: relative;
+        }
+        
+        .tab:hover {
+            background: rgba(52, 152, 219, 0.1);
+            color: #2c3e50;
+        }
+        
+        .tab.active {
+            color: #2c3e50;
+            background: white;
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #3498db;
+        }
+        
         .content {
             padding: 2rem;
+            min-height: 400px;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .section {
@@ -105,6 +160,12 @@
             padding: 1rem;
             border-radius: 8px;
             border: 1px solid #dee2e6;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         
         .info-card h3 {
@@ -171,6 +232,11 @@
             border-radius: 5px;
             text-align: center;
             border: 1px solid #ddd;
+            transition: transform 0.2s;
+        }
+        
+        .tool-item:hover {
+            transform: scale(1.05);
         }
         
         .tool-icon {
@@ -220,6 +286,131 @@
             left: 0;
         }
         
+        .warning {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        
+        .persona-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .persona-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .persona-card:hover {
+            border-color: #3498db;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .persona-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .persona-name {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.25rem;
+        }
+        
+        .persona-role {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .persona-info {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .scenario-timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 1.5rem 0;
+        }
+        
+        .scenario-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #3498db;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.75rem;
+            top: 0.25rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #3498db;
+            border: 2px solid white;
+            box-shadow: 0 0 0 3px #e0e0e0;
+        }
+        
+        .timeline-time {
+            color: #3498db;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .timeline-event {
+            color: #2c3e50;
+            margin-top: 0.25rem;
+        }
+        
+        .readiness-checklist {
+            background: #fff;
+            border: 2px solid #27ae60;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .readiness-checklist h3 {
+            color: #27ae60;
+            margin-bottom: 1rem;
+        }
+        
+        .readiness-checklist label {
+            display: block;
+            padding: 0.5rem 0;
+            cursor: pointer;
+        }
+        
+        .readiness-checklist input[type="checkbox"] {
+            margin-right: 0.75rem;
+            width: 18px;
+            height: 18px;
+            vertical-align: middle;
+        }
+        
         .action-section {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 2rem;
@@ -253,30 +444,6 @@
             opacity: 0.9;
         }
         
-        .warning {
-            background: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-            padding: 1rem;
-            border-radius: 5px;
-            margin: 1rem 0;
-        }
-        
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .info-grid, .tools-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .start-button {
-                padding: 0.8rem 2rem;
-                font-size: 1.1rem;
-            }
-        }
-        
         .pulse {
             animation: pulse 2s infinite;
         }
@@ -292,6 +459,30 @@
                 box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             }
         }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .tabs {
+                overflow-x: scroll;
+            }
+            
+            .tab {
+                font-size: 0.85rem;
+                padding: 0.75rem 1rem;
+            }
+            
+            .info-grid, .tools-grid, .persona-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .start-button {
+                padding: 0.8rem 2rem;
+                font-size: 1.1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -305,114 +496,357 @@
             CONFIDENTIAL - TRAINING EXERCISE
         </div>
         
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('mission')">📋 Mission</button>
+            <button class="tab" onclick="showTab('scenario')">🎯 Scenario</button>
+            <button class="tab" onclick="showTab('tools')">🛠️ Tools</button>
+            <button class="tab" onclick="showTab('personas')">👥 Personas</button>
+            <button class="tab" onclick="showTab('timeline')">⏰ Timeline</button>
+            <button class="tab" onclick="showTab('tips')">💡 Tips</button>
+            <button class="tab" onclick="showTab('ready')">✅ Ready?</button>
+        </div>
+        
         <div class="content">
-            <section class="section">
-                <h2>Mission Briefing</h2>
-                <p>You have been called in as a <strong>Junior Security Consultant</strong> to investigate a potential data breach at TechNova Systems, a mid-sized IT services company.</p>
+            <!-- Mission Tab -->
+            <div id="mission" class="tab-content active">
+                <section class="section">
+                    <h2>Your Mission</h2>
+                    <p>You have been called in as a <strong>Junior Security Consultant</strong> to investigate a potential data breach at TechNova Systems, a mid-sized IT services company.</p>
+                    
+                    <div class="alert-box">
+                        <strong>⚠️ Urgent:</strong> The company is experiencing an active security incident. Customer data may have been compromised. Your investigation is critical to understanding what happened and preventing future attacks.
+                    </div>
+                </section>
                 
-                <div class="alert-box">
-                    <strong>⚠️ Urgent:</strong> The company is experiencing an active security incident. Customer data may have been compromised. Your investigation is critical to understanding what happened and preventing future attacks.
-                </div>
-            </section>
-            
-            <section class="section">
-                <h2>Incident Overview</h2>
-                <div class="info-grid">
-                    <div class="info-card">
-                        <h3>Company</h3>
-                        <p>TechNova Systems</p>
-                        <small>IT Services Provider</small>
-                    </div>
-                    <div class="info-card">
-                        <h3>Date</h3>
-                        <p>November 15, 2024</p>
-                        <small>This morning</small>
-                    </div>
-                    <div class="info-card">
-                        <h3>Severity</h3>
-                        <p style="color: #e74c3c;">HIGH</p>
-                        <small>Customer data affected</small>
-                    </div>
-                    <div class="info-card">
-                        <h3>Your Role</h3>
-                        <p>Incident Investigator</p>
-                        <small>Find out what happened</small>
-                    </div>
-                </div>
-            </section>
-            
-            <section class="section">
                 <div class="objectives">
-                    <h3>🎯 Your Mission Objectives</h3>
+                    <h3>🎯 Mission Objectives</h3>
                     <ul>
                         <li>Investigate the TechNova Systems website for clues</li>
                         <li>Interview company employees using the chat system</li>
                         <li>Collect and analyze evidence of the breach</li>
                         <li>Determine the attack timeline and method</li>
                         <li>Identify what data was compromised</li>
+                        <li>Assess the impact on the company</li>
                         <li>Recommend security improvements</li>
+                        <li>Complete your investigation report</li>
                     </ul>
                 </div>
-            </section>
+                
+                <section class="section">
+                    <h2>Your Role</h2>
+                    <p>As a Junior Security Consultant, you will:</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>Think like a detective - follow the evidence</li>
+                        <li>Ask the right questions to the right people</li>
+                        <li>Document your findings systematically</li>
+                        <li>Connect the dots between different pieces of evidence</li>
+                        <li>Provide actionable recommendations</li>
+                    </ul>
+                </section>
+            </div>
             
-            <section class="section">
-                <h2>Available Tools & Resources</h2>
-                <div class="tools-section">
-                    <div class="tools-grid">
-                        <div class="tool-item">
-                            <div class="tool-icon">🌐</div>
-                            <div class="tool-name">Company Website</div>
-                            <div class="tool-desc">Public pages and press releases</div>
+            <!-- Scenario Tab -->
+            <div id="scenario" class="tab-content">
+                <section class="section">
+                    <h2>Incident Overview</h2>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h3>Company</h3>
+                            <p>TechNova Systems</p>
+                            <small>IT Services Provider</small>
                         </div>
-                        <div class="tool-item">
-                            <div class="tool-icon">💬</div>
-                            <div class="tool-name">Employee Chat</div>
-                            <div class="tool-desc">Interview 4 staff members</div>
+                        <div class="info-card">
+                            <h3>Date</h3>
+                            <p>November 15, 2024</p>
+                            <small>This morning</small>
                         </div>
-                        <div class="tool-item">
-                            <div class="tool-icon">📁</div>
-                            <div class="tool-name">Internal Documents</div>
-                            <div class="tool-desc">Access logs, emails, memos</div>
+                        <div class="info-card">
+                            <h3>Severity</h3>
+                            <p style="color: #e74c3c;">HIGH</p>
+                            <small>Customer data affected</small>
                         </div>
-                        <div class="tool-item">
-                            <div class="tool-icon">📋</div>
-                            <div class="tool-name">Investigation Worksheet</div>
-                            <div class="tool-desc">Track your findings</div>
+                        <div class="info-card">
+                            <h3>Status</h3>
+                            <p>Under Investigation</p>
+                            <small>Your help needed</small>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+                
+                <section class="section">
+                    <h2>Company Background</h2>
+                    <p><strong>TechNova Systems</strong> is a trusted IT services provider offering:</p>
+                    <ul style="margin: 1rem 0; margin-left: 1.5rem;">
+                        <li>Cloud backup solutions (partner: CloudSafe)</li>
+                        <li>24/7 endpoint support</li>
+                        <li>Managed network services</li>
+                        <li>200+ business clients across Australia</li>
+                        <li>Founded in 2015, known for reliability</li>
+                    </ul>
+                </section>
+                
+                <section class="section">
+                    <h2>Initial Report</h2>
+                    <div class="warning">
+                        <strong>Preliminary Information:</strong>
+                        <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                            <li>Multiple customers reporting suspicious invoices</li>
+                            <li>Some invoices contain altered payment details</li>
+                            <li>Staff portal has been locked down</li>
+                            <li>CEO demanding immediate answers</li>
+                            <li>Media may pick up the story soon</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
             
-            <section class="section">
+            <!-- Tools Tab -->
+            <div id="tools" class="tab-content">
+                <section class="section">
+                    <h2>Available Tools & Resources</h2>
+                    <div class="tools-section">
+                        <div class="tools-grid">
+                            <div class="tool-item">
+                                <div class="tool-icon">🌐</div>
+                                <div class="tool-name">Company Website</div>
+                                <div class="tool-desc">Public pages and press releases</div>
+                            </div>
+                            <div class="tool-item">
+                                <div class="tool-icon">💬</div>
+                                <div class="tool-name">Employee Chat</div>
+                                <div class="tool-desc">Interview 4 staff members</div>
+                            </div>
+                            <div class="tool-item">
+                                <div class="tool-icon">📁</div>
+                                <div class="tool-name">Internal Documents</div>
+                                <div class="tool-desc">Access logs, emails, memos</div>
+                            </div>
+                            <div class="tool-item">
+                                <div class="tool-icon">📋</div>
+                                <div class="tool-name">Investigation Worksheet</div>
+                                <div class="tool-desc">Track your findings</div>
+                            </div>
+                            <div class="tool-item">
+                                <div class="tool-icon">🔍</div>
+                                <div class="tool-name">Evidence Trail</div>
+                                <div class="tool-desc">Follow the clues</div>
+                            </div>
+                            <div class="tool-item">
+                                <div class="tool-icon">⏱️</div>
+                                <div class="tool-name">Timeline Builder</div>
+                                <div class="tool-desc">Reconstruct events</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="section">
+                    <h2>How to Use the Chat System</h2>
+                    <ol style="margin-left: 1.5rem;">
+                        <li>Look for the floating <strong>"+"</strong> button on every page</li>
+                        <li>Click to open the chat panel</li>
+                        <li>Select which employee to interview from the dropdown</li>
+                        <li>Type your questions and press Enter</li>
+                        <li>Each employee has different knowledge - talk to everyone!</li>
+                    </ol>
+                </section>
+            </div>
+            
+            <!-- Personas Tab -->
+            <div id="personas" class="tab-content">
+                <section class="section">
+                    <h2>Employees You Can Interview</h2>
+                    <div class="persona-grid">
+                        <div class="persona-card">
+                            <div class="persona-icon">💻</div>
+                            <div class="persona-name">Dave Wilson</div>
+                            <div class="persona-role">IT Support Analyst</div>
+                            <div class="persona-info">
+                                Technical expert. Knows about system logs, email configurations, and the timeline of technical events.
+                            </div>
+                        </div>
+                        
+                        <div class="persona-card">
+                            <div class="persona-icon">📧</div>
+                            <div class="persona-name">Sarah Mitchell</div>
+                            <div class="persona-role">Accounts Clerk</div>
+                            <div class="persona-info">
+                                Processes invoices. May have important information about what happened this morning.
+                            </div>
+                        </div>
+                        
+                        <div class="persona-card">
+                            <div class="persona-icon">🔒</div>
+                            <div class="persona-name">Michael Torres</div>
+                            <div class="persona-role">Security Officer</div>
+                            <div class="persona-info">
+                                Leading the investigation. Has access to security logs and technical analysis.
+                            </div>
+                        </div>
+                        
+                        <div class="persona-card">
+                            <div class="persona-icon">👔</div>
+                            <div class="persona-name">James Patterson</div>
+                            <div class="persona-role">CEO</div>
+                            <div class="persona-info">
+                                Concerned about business impact. Knows about customer complaints and management decisions.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="section">
+                    <h2>Interview Strategy</h2>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Start with open-ended questions like "What happened?"</li>
+                        <li>Follow up on specific details they mention</li>
+                        <li>Cross-reference information between employees</li>
+                        <li>Some employees may be emotional or stressed</li>
+                        <li>Technical staff have technical knowledge, executives know business impact</li>
+                    </ul>
+                </section>
+            </div>
+            
+            <!-- Timeline Tab -->
+            <div id="timeline" class="tab-content">
+                <section class="section">
+                    <h2>Known Timeline (So Far)</h2>
+                    <div class="scenario-timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-time">Early Morning</div>
+                            <div class="timeline-event">Normal business operations at TechNova Systems</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-time">9:00 AM - 9:30 AM</div>
+                            <div class="timeline-event">Something triggered the security incident</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-time">9:30 AM - 10:00 AM</div>
+                            <div class="timeline-event">First signs of trouble emerge</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-time">10:00 AM - 10:30 AM</div>
+                            <div class="timeline-event">Multiple customers report issues</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-time">10:30 AM - Now</div>
+                            <div class="timeline-event">Incident response activated, you've been called in</div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="section">
+                    <h2>Your Task</h2>
+                    <p>Fill in the gaps in this timeline by:</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>Finding specific timestamps in logs and documents</li>
+                        <li>Asking employees what they witnessed</li>
+                        <li>Identifying the sequence of events</li>
+                        <li>Determining cause and effect relationships</li>
+                        <li>Pinpointing when data was actually compromised</li>
+                    </ul>
+                </section>
+            </div>
+            
+            <!-- Tips Tab -->
+            <div id="tips" class="tab-content">
                 <div class="tips-section">
                     <h3>🔍 Investigation Tips</h3>
                     <ul>
                         <li>Start by exploring the public website - look for any notices or alerts</li>
-                        <li>Check the press release and FAQ for official statements</li>
-                        <li>Use the floating "+" button to chat with employees</li>
-                        <li>Different employees know different things - talk to everyone</li>
-                        <li>Look for links to internal documents and evidence</li>
-                        <li>Pay attention to timestamps and specific details</li>
-                        <li>Take notes on your worksheet as you investigate</li>
-                    </ul>
-                </div>
-            </section>
-            
-            <section class="section">
-                <h2>Important Information</h2>
-                <div class="warning">
-                    <strong>Remember:</strong> This is a simulation for educational purposes. In this exercise, you'll learn to:
-                    <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
-                        <li>Recognize phishing attacks</li>
-                        <li>Understand how breaches occur</li>
-                        <li>Think like a security professional</li>
-                        <li>Protect organizations from cyber threats</li>
+                        <li>The press release might downplay the incident - read between the lines</li>
+                        <li>Check the FAQ section - customers often ask about real problems</li>
+                        <li>The staff portal might have "maintenance" messages with clues</li>
+                        <li>Interview all four employees - they each know different pieces</li>
+                        <li>Look for links to internal documents hidden in pages</li>
+                        <li>Pay attention to email addresses and domain names</li>
+                        <li>Compare any documents that seem similar (like invoices)</li>
+                        <li>Note exact times when events occurred</li>
+                        <li>Consider both technical AND human factors</li>
                     </ul>
                 </div>
                 
-                <p style="margin-top: 1rem;"><strong>Time Required:</strong> Approximately 45-60 minutes</p>
-                <p><strong>Work Mode:</strong> Individual or teams of 2-3 students</p>
-            </section>
+                <div class="tips-section" style="background: #fff3cd; border-color: #ffc107;">
+                    <h3>⚠️ Common Mistakes to Avoid</h3>
+                    <ul style="color: #856404;">
+                        <li>Don't ignore the "small" details - they often matter most</li>
+                        <li>Don't trust everything at face value - verify information</li>
+                        <li>Don't focus only on technology - humans are often the weak link</li>
+                        <li>Don't rush - thorough investigation takes time</li>
+                        <li>Don't forget to document your findings in the worksheet</li>
+                    </ul>
+                </div>
+                
+                <section class="section">
+                    <h2>Evidence Priority</h2>
+                    <p>Focus your investigation on finding:</p>
+                    <ol style="margin-left: 1.5rem;">
+                        <li><strong>The initial attack vector</strong> - How did they get in?</li>
+                        <li><strong>The compromised data</strong> - What was stolen or changed?</li>
+                        <li><strong>The timeline</strong> - When did each event occur?</li>
+                        <li><strong>The impact</strong> - Who was affected and how?</li>
+                        <li><strong>The gaps</strong> - What security measures were missing?</li>
+                    </ol>
+                </section>
+            </div>
+            
+            <!-- Ready Tab -->
+            <div id="ready" class="tab-content">
+                <section class="section">
+                    <h2>Pre-Investigation Checklist</h2>
+                    <div class="readiness-checklist">
+                        <h3>Before you begin, confirm you understand:</h3>
+                        <label>
+                            <input type="checkbox">
+                            <span>I am investigating a security breach at TechNova Systems</span>
+                        </label>
+                        <label>
+                            <input type="checkbox">
+                            <span>I need to find evidence across the website and internal documents</span>
+                        </label>
+                        <label>
+                            <input type="checkbox">
+                            <span>I should interview all 4 employees using the chat system</span>
+                        </label>
+                        <label>
+                            <input type="checkbox">
+                            <span>I must determine what type of attack occurred</span>
+                        </label>
+                        <label>
+                            <input type="checkbox">
+                            <span>I need to identify what data was compromised</span>
+                        </label>
+                        <label>
+                            <input type="checkbox">
+                            <span>I should document findings in the investigation worksheet</span>
+                        </label>
+                        <label>
+                            <input type="checkbox">
+                            <span>The investigation will take approximately 45-60 minutes</span>
+                        </label>
+                    </div>
+                </section>
+                
+                <section class="section">
+                    <h2>Important Reminders</h2>
+                    <div class="warning">
+                        <strong>Remember:</strong> This is a simulation for educational purposes. You will learn to:
+                        <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                            <li>Recognize phishing attacks and social engineering</li>
+                            <li>Understand how data breaches occur</li>
+                            <li>Think like a security professional</li>
+                            <li>Protect organizations from cyber threats</li>
+                            <li>Appreciate the importance of security awareness</li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <section class="section" style="text-align: center;">
+                    <h2>Ready to Begin?</h2>
+                    <p style="font-size: 1.1rem; margin: 1rem 0;">TechNova Systems is counting on your investigative skills.</p>
+                    <p>Good luck, Junior Consultant!</p>
+                </section>
+            </div>
         </div>
         
         <div class="action-section">
@@ -426,9 +860,27 @@
     </div>
     
     <script>
-        // Add some interactive elements
+        // Tab management
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active from all tab buttons
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Mark tab button as active
+            event.target.classList.add('active');
+        }
+        
+        // Animate urgency messages
         document.addEventListener('DOMContentLoaded', function() {
-            // Animate the classification banner
             const classification = document.querySelector('.classification');
             setInterval(() => {
                 classification.style.opacity = '0.7';
@@ -437,19 +889,34 @@
                 }, 500);
             }, 3000);
             
-            // Add countdown urgency
+            // Rotate countdown messages
             let urgencyMessages = [
                 "The clock is ticking. TechNova needs your help!",
-                "Customers are at risk. Begin your investigation now.",
                 "Every minute counts in incident response.",
-                "Are you ready to uncover the truth?"
+                "Customers are at risk. Begin your investigation now.",
+                "Are you ready to uncover the truth?",
+                "Your skills are needed. Start the investigation!"
             ];
             let currentMessage = 0;
             
             setInterval(() => {
                 currentMessage = (currentMessage + 1) % urgencyMessages.length;
                 document.querySelector('.countdown').textContent = urgencyMessages[currentMessage];
-            }, 5000);
+            }, 4000);
+            
+            // Check all checkboxes functionality
+            const checkboxes = document.querySelectorAll('.readiness-checklist input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+                    const startButton = document.querySelector('.start-button');
+                    if (allChecked) {
+                        startButton.style.background = '#27ae60';
+                        startButton.style.color = 'white';
+                        startButton.textContent = '✓ Begin Investigation →';
+                    }
+                });
+            });
         });
     </script>
 </body>
