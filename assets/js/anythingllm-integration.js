@@ -35,21 +35,26 @@
     let isInitialized = false;
     let widgetScriptLoaded = false;
 
-    // Load the widget script once with hidden button
-    function loadWidgetScript() {
-        if (widgetScriptLoaded) return Promise.resolve();
+    // Load the widget script with specific embed ID
+    function loadWidgetScript(embedId) {
+        // Remove existing script if present
+        const existingScript = document.getElementById('anythingllm-embed-script');
+        if (existingScript) {
+            existingScript.remove();
+            widgetScriptLoaded = false;
+        }
         
         return new Promise((resolve, reject) => {
             const script = document.createElement('script');
             script.id = 'anythingllm-embed-script';
-            script.setAttribute('data-embed-id', ''); // Start with empty ID
+            script.setAttribute('data-embed-id', embedId || ''); // Set the embed ID
             script.setAttribute('data-base-api-url', BASE_API_URL);
             script.setAttribute('data-button-hidden', 'true'); // Hide the floating button!
             script.src = WIDGET_SCRIPT_URL;
             
             script.onload = () => {
                 widgetScriptLoaded = true;
-                console.log('AnythingLLM widget script loaded');
+                console.log('AnythingLLM widget script loaded with embed ID:', embedId);
                 resolve();
             };
             
@@ -71,15 +76,11 @@
         }
 
         try {
-            // Ensure script is loaded
-            await loadWidgetScript();
+            // Load script with the correct embed ID
+            await loadWidgetScript(config.embedId);
             
-            // Update the embed ID on the script tag
-            const embedScript = document.getElementById('anythingllm-embed-script');
-            if (embedScript) {
-                embedScript.dataset.embedId = config.embedId;
-                console.log('Updated embed ID to:', config.embedId);
-            }
+            // Small delay to ensure widget initializes
+            await new Promise(resolve => setTimeout(resolve, 500));
             
             // Open the chat window using the widget's API
             if (window.AnythingLLMEmbed && window.AnythingLLMEmbed.open) {
