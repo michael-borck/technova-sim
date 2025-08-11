@@ -33,85 +33,36 @@
 
     let currentPersona = 'it-analyst';
     let currentWidget = null;
-    let widgetContainer = null;
     let isInitialized = false;
+    let widgetScriptLoaded = false;
 
-    // Create a custom container for the AnythingLLM widget
-    function createWidgetContainer() {
-        // Remove existing container if present
-        const existing = document.getElementById('anythingllm-container');
-        if (existing) {
-            existing.remove();
+    // Load the widget script if not already loaded
+    function loadWidgetScript(callback) {
+        if (widgetScriptLoaded) {
+            callback();
+            return;
         }
 
-        // Create new container
-        const container = document.createElement('div');
-        container.id = 'anythingllm-container';
-        container.style.cssText = `
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 400px;
-            height: 600px;
-            z-index: 9999;
-            display: none;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            background: white;
-        `;
-        
-        // Add a header to show it's AnythingLLM
-        const header = document.createElement('div');
-        header.style.cssText = `
-            background: #2563eb;
-            color: white;
-            padding: 10px;
-            font-size: 14px;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        `;
-        
-        const title = document.createElement('span');
-        title.textContent = 'AI-Powered Chat';
-        header.appendChild(title);
-        
-        const closeBtn = document.createElement('button');
-        closeBtn.innerHTML = '×';
-        closeBtn.style.cssText = `
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 0;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        `;
-        closeBtn.onclick = () => {
-            container.style.display = 'none';
-            // Uncheck the AI Mode toggle
-            const aiToggle = document.getElementById('anythingllm-toggle');
-            if (aiToggle && aiToggle.checked) {
-                aiToggle.checked = false;
-                // Show built-in chat elements
-                const chatBody = document.getElementById('chat-body');
-                const chatInput = document.querySelector('.chat-input');
-                if (chatBody) chatBody.style.display = 'block';
-                if (chatInput) chatInput.style.display = 'flex';
-            }
+        // Check if script already exists
+        const existingScript = document.querySelector(`script[src="${WIDGET_SCRIPT_URL}"]`);
+        if (existingScript) {
+            widgetScriptLoaded = true;
+            callback();
+            return;
+        }
+
+        const script = document.createElement('script');
+        script.src = WIDGET_SCRIPT_URL;
+        script.async = true;
+        script.onload = () => {
+            widgetScriptLoaded = true;
+            console.log('AnythingLLM widget script loaded');
+            callback();
         };
-        header.appendChild(closeBtn);
-        
-        container.appendChild(header);
-        
-        document.body.appendChild(container);
-        return container;
+        script.onerror = (e) => {
+            console.error('Failed to load AnythingLLM widget script:', e);
+        };
+        document.body.appendChild(script);
     }
 
     // Load AnythingLLM widget for specific persona
@@ -122,66 +73,59 @@
             return false;
         }
 
-        // Ensure widget container exists
-        if (!widgetContainer) {
-            widgetContainer = createWidgetContainer();
-        }
+        // Load the widget script first
+        loadWidgetScript(() => {
+            // Remove any existing AnythingLLM chat bubbles
+            const existingBubbles = document.querySelectorAll('[id^="anythingllm-chat-bubble"]');
+            existingBubbles.forEach(bubble => bubble.remove());
+            
+            // Remove any existing AnythingLLM iframes
+            const existingIframes = document.querySelectorAll('iframe[id^="anythingllm-chat-iframe"]');
+            existingIframes.forEach(iframe => iframe.remove());
 
-        // Update header title
-        const titleSpan = widgetContainer.querySelector('span');
-        if (titleSpan) {
-            titleSpan.textContent = `AI Chat - ${config.name}`;
-        }
-        
-        // Remove any existing iframe containers
-        const existingIframes = widgetContainer.querySelectorAll('iframe');
-        existingIframes.forEach(iframe => {
-            if (iframe.parentElement !== widgetContainer) {
-                iframe.parentElement.remove();
+            // Set up the embed configuration on window
+            window.anythingllmChatEmbed = {
+                id: config.embedId,
+                baseUrl: 'https://chat.serveur.au',
+                prompts: [],
+                modalSettings: {
+                    showOnLoad: true,
+                    assistantName: config.name,
+                    assistantIcon: '🔍',
+                    greeting: `Hi! I'm ${config.name}. How can I help you today?`,
+                    textSize: 'normal',
+                    buttonColor: '#2563eb',
+                    userColor: '#2563eb',
+                    assistantColor: '#374151',
+                    windowHeight: 500,
+                    windowWidth: 380
+                }
+            };
+
+            // Initialize the widget
+            if (window.AnythingLLMChatEmbed) {
+                window.AnythingLLMChatEmbed.init(config.embedId, 'https://chat.serveur.au');
+                console.log('AnythingLLM widget initialized for', persona);
+                
+                // Try to open the chat programmatically
+                setTimeout(() => {
+                    const chatBubble = document.querySelector('[id^="anythingllm-chat-bubble"]');
+                    if (chatBubble) {
+                        chatBubble.click();
+                    }
+                }, 100);
             } else {
-                iframe.remove();
+                console.error('AnythingLLMChatEmbed not available');
             }
         });
-
-        // Create iframe container
-        const iframeContainer = document.createElement('div');
-        iframeContainer.style.cssText = 'width: 100%; height: calc(100% - 45px);';
-        
-        // Create iframe for the embed
-        const iframe = document.createElement('iframe');
-        iframe.id = `anythingllm-iframe-${persona}`;
-        iframe.style.cssText = 'width: 100%; height: 100%; border: none; background: white;';
-        iframe.setAttribute('allow', 'clipboard-write; microphone');
-        iframe.setAttribute('allowfullscreen', 'true');
-        
-        // Build the embed URL - use direct embed link
-        const embedUrl = `https://chat.serveur.au/embed/${config.embedId}`;
-        
-        console.log('Loading AnythingLLM iframe:', embedUrl);
-        iframe.src = embedUrl;
-        
-        // Add load event listener
-        iframe.onload = () => {
-            console.log('AnythingLLM iframe loaded successfully');
-        };
-        iframe.onerror = (e) => {
-            console.error('AnythingLLM iframe failed to load:', e);
-        };
-        
-        iframeContainer.appendChild(iframe);
-        widgetContainer.appendChild(iframeContainer);
         
         currentPersona = persona;
-        console.log('Widget loaded for persona:', persona);
         return true;
     }
 
     // Initialize the integration
     function initializeIntegration() {
         if (isInitialized) return;
-        
-        // Create container for widgets
-        widgetContainer = createWidgetContainer();
         
         // Wait for toggleChat to be available
         const setupOverride = () => {
@@ -202,7 +146,6 @@
                                 
                                 // Load and show AnythingLLM widget
                                 if (loadPersonaWidget(persona)) {
-                                    widgetContainer.style.display = 'block';
                                     console.log('Using AnythingLLM for', persona);
                                     return;
                                 }
@@ -210,8 +153,13 @@
                         }
                     } else {
                         // Hide AnythingLLM widget
-                        if (widgetContainer) {
-                            widgetContainer.style.display = 'none';
+                        const chatIframe = document.querySelector('iframe[id^="anythingllm-chat-iframe"]');
+                        if (chatIframe) {
+                            chatIframe.style.display = 'none';
+                        }
+                        const chatBubble = document.querySelector('[id^="anythingllm-chat-bubble"]');
+                        if (chatBubble) {
+                            chatBubble.style.display = 'none';
                         }
                     }
                     // Fallback to original chat
@@ -232,7 +180,9 @@
         if (personaSelect) {
             personaSelect.addEventListener('change', function() {
                 const newPersona = this.value;
-                if (widgetContainer && widgetContainer.style.display !== 'none') {
+                // If AI Mode is active, reload the widget for new persona
+                const aiToggle = document.getElementById('anythingllm-toggle');
+                if (aiToggle && aiToggle.checked) {
                     loadPersonaWidget(newPersona);
                 }
             });
@@ -290,7 +240,6 @@
                     
                     // Load and show AnythingLLM widget
                     if (loadPersonaWidget(persona)) {
-                        widgetContainer.style.display = 'block';
                         console.log('AI Mode enabled for', persona);
                     } else {
                         console.error('Failed to load AnythingLLM widget');
@@ -307,9 +256,14 @@
                 if (chatBody) chatBody.style.display = 'block';
                 if (chatInput) chatInput.style.display = 'flex';
                 
-                // Hide AnythingLLM widget
-                if (widgetContainer) {
-                    widgetContainer.style.display = 'none';
+                // Close AnythingLLM widget if open
+                const chatIframe = document.querySelector('iframe[id^="anythingllm-chat-iframe"]');
+                if (chatIframe) {
+                    chatIframe.style.display = 'none';
+                }
+                const chatBubble = document.querySelector('[id^="anythingllm-chat-bubble"]');
+                if (chatBubble) {
+                    chatBubble.style.display = 'none';
                 }
             }
         });
