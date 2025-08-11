@@ -36,7 +36,7 @@
     let isInitialized = false;
     let widgetScriptLoaded = false;
 
-    // Load AnythingLLM iframe into our chat panel
+    // Load AnythingLLM widget script and initialize
     function loadPersonaWidget(persona) {
         const config = ANYTHINGLLM_CONFIG[persona];
         if (!config || !config.embedId || config.embedId.includes('YOUR-')) {
@@ -44,41 +44,41 @@
             return false;
         }
 
-        const chatBody = document.getElementById('chat-body');
-        if (!chatBody) {
-            console.error('Chat body not found');
-            return false;
+        // Remove any existing scripts
+        const existingScript = document.querySelector('script[src*="anythingllm-chat-widget"]');
+        if (existingScript) {
+            existingScript.remove();
         }
 
-        // Clear chat body and add iframe
-        chatBody.innerHTML = '';
-        chatBody.style.padding = '0';
-        chatBody.style.height = 'calc(100% - 50px)'; // Account for header
+        // Remove any existing widget elements
+        const existingElements = document.querySelectorAll('[id*="anythingllm"]');
+        existingElements.forEach(el => el.remove());
+
+        // Create and add the script with data attributes
+        const script = document.createElement('script');
+        script.setAttribute('data-embed-id', config.embedId);
+        script.setAttribute('data-base-api-url', BASE_API_URL);
+        script.src = WIDGET_SCRIPT_URL;
         
-        // Create iframe for AnythingLLM
-        const iframe = document.createElement('iframe');
-        iframe.id = 'anythingllm-embed-iframe';
-        iframe.src = `https://chat.serveur.au/embed/${config.embedId}`;
-        iframe.style.cssText = `
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: white;
-        `;
-        
-        iframe.onload = () => {
-            console.log('AnythingLLM iframe loaded for', persona);
+        script.onload = () => {
+            console.log('AnythingLLM script loaded for', persona);
+            
+            // The script should auto-initialize, but let's try to trigger it
+            if (window.EmbeddedAnythingLLM) {
+                console.log('EmbeddedAnythingLLM available');
+            }
+            
+            // Auto-click the chat button after it appears
+            setTimeout(() => {
+                const chatButton = document.querySelector('[id*="anythingllm-chat-bubble"]');
+                if (chatButton) {
+                    chatButton.click();
+                    console.log('Opened AnythingLLM chat');
+                }
+            }, 1000);
         };
         
-        iframe.onerror = (e) => {
-            console.error('Failed to load AnythingLLM iframe:', e);
-            // Restore normal chat on error
-            chatBody.style.padding = '';
-            chatBody.style.height = '';
-            chatBody.innerHTML = '<div style="padding: 10px; color: red;">Failed to load AI chat. Please try again.</div>';
-        };
-        
-        chatBody.appendChild(iframe);
+        document.body.appendChild(script);
         currentPersona = persona;
         return true;
     }
@@ -133,8 +133,8 @@
         
         toggleSwitch.addEventListener('change', function() {
             const useAnythingLLM = this.checked;
-            const chatBody = document.getElementById('chat-body');
-            const chatInput = document.querySelector('.chat-input');
+            const chatPanel = document.querySelector('.chat-panel');
+            const chatFab = document.querySelector('.chat-fab');
             
             if (useAnythingLLM) {
                 // Get current persona
@@ -144,48 +144,34 @@
                 
                 // Check if AnythingLLM is configured
                 if (config && config.embedId && !config.embedId.includes('YOUR-')) {
-                    // Hide chat input
-                    if (chatInput) chatInput.style.display = 'none';
+                    // Hide our chat panel and FAB
+                    if (chatPanel) chatPanel.classList.remove('active');
+                    if (chatFab) chatFab.style.display = 'none';
                     
-                    // Load AnythingLLM iframe into chat body
+                    // Load AnythingLLM widget
                     if (loadPersonaWidget(persona)) {
                         console.log('AI Mode enabled for', persona);
                     } else {
                         console.error('Failed to load AnythingLLM widget');
                         this.checked = false;
-                        if (chatInput) chatInput.style.display = 'flex';
-                        restoreNormalChat();
+                        if (chatFab) chatFab.style.display = 'block';
                     }
                 } else {
                     alert('AnythingLLM is not configured for ' + persona);
                     this.checked = false;
                 }
             } else {
-                // Restore normal chat
-                if (chatInput) chatInput.style.display = 'flex';
-                restoreNormalChat();
+                // Restore our chat FAB
+                if (chatFab) chatFab.style.display = 'block';
+                
+                // Remove AnythingLLM elements
+                const existingScript = document.querySelector('script[src*="anythingllm-chat-widget"]');
+                if (existingScript) existingScript.remove();
+                
+                const existingElements = document.querySelectorAll('[id*="anythingllm"]');
+                existingElements.forEach(el => el.remove());
             }
         });
-        
-        // Helper function to restore normal chat
-        function restoreNormalChat() {
-            const chatBody = document.getElementById('chat-body');
-            if (chatBody) {
-                // Remove iframe
-                const iframe = document.getElementById('anythingllm-embed-iframe');
-                if (iframe) iframe.remove();
-                
-                // Restore chat body styles
-                chatBody.style.padding = '';
-                chatBody.style.height = '';
-                chatBody.innerHTML = '';
-                
-                // Re-add welcome message if needed
-                if (window.addWelcomeMessage) {
-                    window.addWelcomeMessage();
-                }
-            }
-        }
 
         toggleContainer.appendChild(toggleLabel);
         toggleContainer.appendChild(toggleSwitch);
