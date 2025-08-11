@@ -51,8 +51,8 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 380px;
-            height: 500px;
+            width: 400px;
+            height: 600px;
             z-index: 9999;
             display: none;
             border-radius: 12px;
@@ -150,20 +150,15 @@
         // Create iframe for the embed
         const iframe = document.createElement('iframe');
         iframe.id = `anythingllm-iframe-${persona}`;
-        iframe.style.cssText = 'width: 100%; height: 100%; border: none;';
+        iframe.style.cssText = 'width: 100%; height: 100%; border: none; background: white;';
+        iframe.setAttribute('allow', 'clipboard-write; microphone');
+        iframe.setAttribute('allowfullscreen', 'true');
         
-        // Build the embed URL with configuration
-        const embedUrl = new URL(`${BASE_API_URL.replace('/api/embed', '')}/embed/${config.embedId}`);
-        embedUrl.searchParams.set('theme', 'dark'); // or 'light'
-        embedUrl.searchParams.set('assistant_name', config.name);
-        embedUrl.searchParams.set('assistant_icon', '🔍');
-        embedUrl.searchParams.set('window_height', '460'); // Adjusted for header
-        embedUrl.searchParams.set('window_width', '380');
-        embedUrl.searchParams.set('text_size', 'normal');
-        embedUrl.searchParams.set('open_on_load', 'false');
+        // Build the embed URL - use direct embed link
+        const embedUrl = `https://chat.serveur.au/embed/${config.embedId}`;
         
-        console.log('Loading AnythingLLM iframe:', embedUrl.toString());
-        iframe.src = embedUrl.toString();
+        console.log('Loading AnythingLLM iframe:', embedUrl);
+        iframe.src = embedUrl;
         
         // Add load event listener
         iframe.onload = () => {
