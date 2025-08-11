@@ -36,7 +36,7 @@
     let isInitialized = false;
     let widgetScriptLoaded = false;
 
-    // Load AnythingLLM widget for specific persona
+    // Load AnythingLLM iframe into our chat panel
     function loadPersonaWidget(persona) {
         const config = ANYTHINGLLM_CONFIG[persona];
         if (!config || !config.embedId || config.embedId.includes('YOUR-')) {
@@ -44,41 +44,41 @@
             return false;
         }
 
-        // Remove any existing AnythingLLM scripts
-        const existingScripts = document.querySelectorAll('script[data-embed-id]');
-        existingScripts.forEach(script => script.remove());
-        
-        // Remove any existing AnythingLLM elements
-        const existingBubbles = document.querySelectorAll('[id^="anythingllm-chat-bubble"]');
-        existingBubbles.forEach(bubble => bubble.remove());
-        
-        const existingIframes = document.querySelectorAll('iframe[id^="anythingllm-chat-iframe"]');
-        existingIframes.forEach(iframe => iframe.remove());
+        const chatBody = document.getElementById('chat-body');
+        if (!chatBody) {
+            console.error('Chat body not found');
+            return false;
+        }
 
-        // Create new script with data attributes
-        const script = document.createElement('script');
-        script.setAttribute('data-embed-id', config.embedId);
-        script.setAttribute('data-base-api-url', BASE_API_URL);
-        script.src = WIDGET_SCRIPT_URL;
+        // Clear chat body and add iframe
+        chatBody.innerHTML = '';
+        chatBody.style.padding = '0';
+        chatBody.style.height = 'calc(100% - 50px)'; // Account for header
         
-        script.onload = () => {
-            console.log('AnythingLLM widget loaded for', persona);
-            
-            // Auto-open the chat after a short delay
-            setTimeout(() => {
-                const chatBubble = document.querySelector('[id^="anythingllm-chat-bubble"]');
-                if (chatBubble) {
-                    chatBubble.click();
-                    console.log('Auto-opened AnythingLLM chat');
-                }
-            }, 500);
+        // Create iframe for AnythingLLM
+        const iframe = document.createElement('iframe');
+        iframe.id = 'anythingllm-embed-iframe';
+        iframe.src = `https://chat.serveur.au/embed/${config.embedId}`;
+        iframe.style.cssText = `
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        `;
+        
+        iframe.onload = () => {
+            console.log('AnythingLLM iframe loaded for', persona);
         };
         
-        script.onerror = (e) => {
-            console.error('Failed to load AnythingLLM widget:', e);
+        iframe.onerror = (e) => {
+            console.error('Failed to load AnythingLLM iframe:', e);
+            // Restore normal chat on error
+            chatBody.style.padding = '';
+            chatBody.style.height = '';
+            chatBody.innerHTML = '<div style="padding: 10px; color: red;">Failed to load AI chat. Please try again.</div>';
         };
         
-        document.body.appendChild(script);
+        chatBody.appendChild(iframe);
         currentPersona = persona;
         return true;
     }
@@ -87,60 +87,7 @@
     function initializeIntegration() {
         if (isInitialized) return;
         
-        // Wait for toggleChat to be available
-        const setupOverride = () => {
-            const originalToggle = window.toggleChat;
-            if (originalToggle) {
-                window.toggleChat = function(open) {
-                    if (open) {
-                        // Get current persona from dropdown
-                        const select = document.getElementById('persona-select');
-                        if (select) {
-                            const persona = select.value;
-                            const config = ANYTHINGLLM_CONFIG[persona];
-                            // Check if AnythingLLM is configured for this persona
-                            if (config && config.embedId && !config.embedId.includes('YOUR-')) {
-                                // Hide the default chat panel and FAB
-                                const panel = document.querySelector('.chat-panel');
-                                if (panel) panel.classList.remove('active');
-                                
-                                const chatFab = document.querySelector('.chat-fab');
-                                if (chatFab) chatFab.style.display = 'none';
-                                
-                                // Load and show AnythingLLM widget
-                                if (loadPersonaWidget(persona)) {
-                                    console.log('Using AnythingLLM for', persona);
-                                    return;
-                                }
-                            }
-                        }
-                    } else {
-                        // Show our FAB again
-                        const chatFab = document.querySelector('.chat-fab');
-                        if (chatFab) chatFab.style.display = 'block';
-                        
-                        // Remove AnythingLLM elements
-                        const existingScripts = document.querySelectorAll('script[data-embed-id]');
-                        existingScripts.forEach(script => script.remove());
-                        
-                        const chatBubbles = document.querySelectorAll('[id^="anythingllm-chat-bubble"]');
-                        chatBubbles.forEach(bubble => bubble.remove());
-                        
-                        const chatIframes = document.querySelectorAll('iframe[id^="anythingllm-chat-iframe"]');
-                        chatIframes.forEach(iframe => iframe.remove());
-                    }
-                    // Fallback to original chat
-                    originalToggle(open);
-                };
-                return true;
-            }
-            return false;
-        };
-        
-        // Try to setup override, retry if toggleChat not yet available
-        if (!setupOverride()) {
-            setTimeout(setupOverride, 200);
-        }
+        // No need to override toggleChat anymore - we're using the AI Mode toggle instead
 
         // Listen for persona changes
         const personaSelect = document.getElementById('persona-select');
@@ -186,10 +133,8 @@
         
         toggleSwitch.addEventListener('change', function() {
             const useAnythingLLM = this.checked;
-            const chatPanel = document.querySelector('.chat-panel');
             const chatBody = document.getElementById('chat-body');
             const chatInput = document.querySelector('.chat-input');
-            const chatFab = document.querySelector('.chat-fab');
             
             if (useAnythingLLM) {
                 // Get current persona
@@ -199,49 +144,48 @@
                 
                 // Check if AnythingLLM is configured
                 if (config && config.embedId && !config.embedId.includes('YOUR-')) {
-                    // Hide built-in chat elements
-                    if (chatBody) chatBody.style.display = 'none';
+                    // Hide chat input
                     if (chatInput) chatInput.style.display = 'none';
                     
-                    // Hide the entire chat panel
-                    if (chatPanel) chatPanel.classList.remove('active');
-                    
-                    // Hide our chat FAB since AnythingLLM will show its own
-                    if (chatFab) chatFab.style.display = 'none';
-                    
-                    // Load and show AnythingLLM widget
+                    // Load AnythingLLM iframe into chat body
                     if (loadPersonaWidget(persona)) {
                         console.log('AI Mode enabled for', persona);
                     } else {
                         console.error('Failed to load AnythingLLM widget');
                         this.checked = false;
-                        if (chatBody) chatBody.style.display = 'block';
                         if (chatInput) chatInput.style.display = 'flex';
-                        if (chatFab) chatFab.style.display = 'block';
+                        restoreNormalChat();
                     }
                 } else {
                     alert('AnythingLLM is not configured for ' + persona);
                     this.checked = false;
                 }
             } else {
-                // Show built-in chat elements
-                if (chatBody) chatBody.style.display = 'block';
+                // Restore normal chat
                 if (chatInput) chatInput.style.display = 'flex';
-                
-                // Show our chat FAB again
-                if (chatFab) chatFab.style.display = 'block';
-                
-                // Remove AnythingLLM elements
-                const existingScripts = document.querySelectorAll('script[data-embed-id]');
-                existingScripts.forEach(script => script.remove());
-                
-                const chatBubbles = document.querySelectorAll('[id^="anythingllm-chat-bubble"]');
-                chatBubbles.forEach(bubble => bubble.remove());
-                
-                const chatIframes = document.querySelectorAll('iframe[id^="anythingllm-chat-iframe"]');
-                chatIframes.forEach(iframe => iframe.remove());
+                restoreNormalChat();
             }
         });
+        
+        // Helper function to restore normal chat
+        function restoreNormalChat() {
+            const chatBody = document.getElementById('chat-body');
+            if (chatBody) {
+                // Remove iframe
+                const iframe = document.getElementById('anythingllm-embed-iframe');
+                if (iframe) iframe.remove();
+                
+                // Restore chat body styles
+                chatBody.style.padding = '';
+                chatBody.style.height = '';
+                chatBody.innerHTML = '';
+                
+                // Re-add welcome message if needed
+                if (window.addWelcomeMessage) {
+                    window.addWelcomeMessage();
+                }
+            }
+        }
 
         toggleContainer.appendChild(toggleLabel);
         toggleContainer.appendChild(toggleSwitch);

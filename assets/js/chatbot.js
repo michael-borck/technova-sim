@@ -83,8 +83,9 @@
         }
     }
     
-    // Expose toggleChat to global scope for AnythingLLM integration
+    // Expose functions to global scope for AnythingLLM integration
     window.toggleChat = toggleChat;
+    window.addWelcomeMessage = addWelcomeMessage;
 
     function addWelcomeMessage() {
         const persona = document.getElementById('persona-select').value;
