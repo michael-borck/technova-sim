@@ -185,8 +185,8 @@
         }
     }
 
-    // Alternative: Direct API integration (if you prefer API over iframe)
-    window.anythingLLMAPI = async function(persona, message) {
+    // Direct API integration for chat messages
+    window.anythingLLMAPI = async function(persona, message, sessionId) {
         const config = ANYTHINGLLM_CONFIG[persona];
         if (!config || !config.embedId) {
             console.error('AnythingLLM not configured for', persona);
@@ -194,6 +194,9 @@
         }
 
         try {
+            // Use a consistent session ID per conversation
+            const session = sessionId || `technova-${persona}-${Date.now()}`;
+            
             const response = await fetch(`${BASE_API_URL}/chat`, {
                 method: 'POST',
                 headers: {
@@ -202,17 +205,22 @@
                 body: JSON.stringify({
                     embedId: config.embedId,
                     message: message,
-                    sessionId: `technova-${Date.now()}`,
-                    // Add any additional context here
+                    sessionId: session
                 })
             });
 
             if (!response.ok) {
-                throw new Error(`API request failed: ${response.status}`);
+                console.error(`API request failed: ${response.status}`);
+                const text = await response.text();
+                console.error('Response:', text);
+                return null;
             }
 
             const data = await response.json();
-            return data.textResponse || data.response || data.message;
+            return {
+                text: data.textResponse || data.response || data.message || 'No response',
+                sessionId: session
+            };
         } catch (error) {
             console.error('AnythingLLM API error:', error);
             return null;
@@ -221,10 +229,16 @@
 
     // Hook into the existing chatbot backend
     window.chatbotBackend = async function(persona, message, context) {
-        // Try AnythingLLM API first
-        const response = await window.anythingLLMAPI(persona, message);
-        if (response) {
-            return response;
+        // Check if AI Mode is enabled
+        const aiToggle = document.getElementById('anythingllm-toggle');
+        if (aiToggle && aiToggle.checked) {
+            // Try AnythingLLM API
+            const response = await window.anythingLLMAPI(persona, message, context.sessionId);
+            if (response) {
+                // Store session ID for continuity
+                context.sessionId = response.sessionId;
+                return response.text;
+            }
         }
         
         // Fallback to built-in responses
