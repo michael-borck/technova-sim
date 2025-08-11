@@ -6,22 +6,22 @@
     // Replace these with your actual embed IDs from AnythingLLM
     const ANYTHINGLLM_CONFIG = {
         'it-analyst': {
-            embedId: '0d959949-dc6f-4fd5-bf85-9deb9a5262f9', // Replace with Dave Wilson's workspace embed ID
+            embedId: '938328b5-18ea-4c7f-8760-cb7caecf0694', // Replace with Dave Wilson's workspace embed ID
             name: 'Dave Wilson - IT Support',
             placeholder: 'Ask about technical details...'
         },
         'accounts-clerk': {
-            embedId: 'YOUR-SARAH-EMBED-ID', // Replace with Sarah Mitchell's workspace embed ID
+            embedId: '608097a5-197b-47db-a012-92ae5a53b35e', // Replace with Sarah Mitchell's workspace embed ID
             name: 'Sarah Mitchell - Accounts',
             placeholder: 'Ask about the phishing email...'
         },
         'security-officer': {
-            embedId: 'YOUR-MICHAEL-EMBED-ID', // Replace with Michael Torres's workspace embed ID
+            embedId: '921a5ed7-e258-47d6-8293-14686669656d', // Replace with Michael Torres's workspace embed ID
             name: 'Michael Torres - Security',
             placeholder: 'Ask about the investigation...'
         },
         'ceo': {
-            embedId: 'YOUR-JAMES-EMBED-ID', // Replace with James Patterson's workspace embed ID
+            embedId: '0d959949-dc6f-4fd5-bf85-9deb9a5262f9', // Replace with James Patterson's workspace embed ID
             name: 'James Patterson - CEO',
             placeholder: 'Ask about business impact...'
         }
