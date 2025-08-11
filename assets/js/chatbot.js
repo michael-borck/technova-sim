@@ -82,6 +82,9 @@
             panel.classList.remove('active');
         }
     }
+    
+    // Expose toggleChat to global scope for AnythingLLM integration
+    window.toggleChat = toggleChat;
 
     function addWelcomeMessage() {
         const persona = document.getElementById('persona-select').value;
@@ -150,18 +153,20 @@
     }
 
     async function getResponse(persona, message) {
+        // First try the AnythingLLM backend if available
         if (window.chatbotBackend && typeof window.chatbotBackend === 'function') {
             try {
                 const response = await window.chatbotBackend(persona, message, {
                     page: location.pathname,
                     sessionId: chatState.sessionId
                 });
-                return response;
+                if (response) return response;
             } catch (error) {
                 console.error('Chatbot backend error:', error);
             }
         }
         
+        // Fallback to persona.js responses
         if (window.getPersonaResponse && typeof window.getPersonaResponse === 'function') {
             return window.getPersonaResponse(persona, message, {
                 page: location.pathname,

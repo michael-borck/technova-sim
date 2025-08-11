@@ -49,16 +49,57 @@
         container.id = 'anythingllm-container';
         container.style.cssText = `
             position: fixed;
-            bottom: 80px;
+            bottom: 20px;
             right: 20px;
             width: 380px;
             height: 500px;
-            z-index: 9998;
+            z-index: 9999;
             display: none;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            background: white;
         `;
+        
+        // Add a header to show it's AnythingLLM
+        const header = document.createElement('div');
+        header.style.cssText = `
+            background: #2563eb;
+            color: white;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        `;
+        
+        const title = document.createElement('span');
+        title.textContent = 'AI-Powered Chat';
+        header.appendChild(title);
+        
+        const closeBtn = document.createElement('button');
+        closeBtn.innerHTML = '×';
+        closeBtn.style.cssText = `
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        `;
+        closeBtn.onclick = () => {
+            container.style.display = 'none';
+            window.toggleChat(false);
+        };
+        header.appendChild(closeBtn);
+        
+        container.appendChild(header);
         
         document.body.appendChild(container);
         return container;
@@ -72,11 +113,23 @@
             return false;
         }
 
-        // Clear existing widget
+        // Clear existing widget content but keep header
         if (widgetContainer) {
-            widgetContainer.innerHTML = '';
+            // Update header title
+            const titleSpan = widgetContainer.querySelector('span');
+            if (titleSpan) {
+                titleSpan.textContent = `AI Chat - ${config.name}`;
+            }
+            
+            // Remove iframe containers, keep header
+            const iframes = widgetContainer.querySelectorAll('div[style*="calc"]');
+            iframes.forEach(iframe => iframe.remove());
         }
 
+        // Create iframe container
+        const iframeContainer = document.createElement('div');
+        iframeContainer.style.cssText = 'width: 100%; height: calc(100% - 40px);';
+        
         // Create iframe for the embed
         const iframe = document.createElement('iframe');
         iframe.id = `anythingllm-iframe-${persona}`;
@@ -87,13 +140,14 @@
         embedUrl.searchParams.set('theme', 'dark'); // or 'light'
         embedUrl.searchParams.set('assistant_name', config.name);
         embedUrl.searchParams.set('assistant_icon', '🔍');
-        embedUrl.searchParams.set('window_height', '500');
+        embedUrl.searchParams.set('window_height', '460'); // Adjusted for header
         embedUrl.searchParams.set('window_width', '380');
         embedUrl.searchParams.set('text_size', 'normal');
         embedUrl.searchParams.set('open_on_load', 'false');
         
         iframe.src = embedUrl.toString();
-        widgetContainer.appendChild(iframe);
+        iframeContainer.appendChild(iframe);
+        widgetContainer.appendChild(iframeContainer);
         
         currentPersona = persona;
         return true;
@@ -106,28 +160,48 @@
         // Create container for widgets
         widgetContainer = createWidgetContainer();
         
-        // Override the existing chatbot toggle
-        const originalToggle = window.toggleChat;
-        if (originalToggle) {
-            window.toggleChat = function(open) {
-                if (open) {
-                    // Get current persona from dropdown
-                    const select = document.getElementById('persona-select');
-                    if (select) {
-                        const persona = select.value;
-                        if (loadPersonaWidget(persona)) {
-                            widgetContainer.style.display = 'block';
-                        } else {
-                            // Fallback to original chat if AnythingLLM not configured
-                            console.log('Using fallback chat for', persona);
-                            originalToggle(open);
+        // Wait for toggleChat to be available
+        const setupOverride = () => {
+            const originalToggle = window.toggleChat;
+            if (originalToggle) {
+                window.toggleChat = function(open) {
+                    if (open) {
+                        // Get current persona from dropdown
+                        const select = document.getElementById('persona-select');
+                        if (select) {
+                            const persona = select.value;
+                            const config = ANYTHINGLLM_CONFIG[persona];
+                            // Check if AnythingLLM is configured for this persona
+                            if (config && config.embedId && !config.embedId.includes('YOUR-')) {
+                                // Hide the default chat panel
+                                const panel = document.querySelector('.chat-panel');
+                                if (panel) panel.classList.remove('active');
+                                
+                                // Load and show AnythingLLM widget
+                                if (loadPersonaWidget(persona)) {
+                                    widgetContainer.style.display = 'block';
+                                    console.log('Using AnythingLLM for', persona);
+                                    return;
+                                }
+                            }
+                        }
+                    } else {
+                        // Hide AnythingLLM widget
+                        if (widgetContainer) {
+                            widgetContainer.style.display = 'none';
                         }
                     }
-                } else {
-                    widgetContainer.style.display = 'none';
+                    // Fallback to original chat
                     originalToggle(open);
-                }
-            };
+                };
+                return true;
+            }
+            return false;
+        };
+        
+        // Try to setup override, retry if toggleChat not yet available
+        if (!setupOverride()) {
+            setTimeout(setupOverride, 200);
         }
 
         // Listen for persona changes
@@ -262,10 +336,13 @@
 
     // Initialize when DOM is ready
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializeIntegration);
+        document.addEventListener('DOMContentLoaded', () => {
+            // Delay to ensure chatbot.js has fully initialized
+            setTimeout(initializeIntegration, 500);
+        });
     } else {
-        // Small delay to ensure chatbot.js has loaded first
-        setTimeout(initializeIntegration, 100);
+        // Delay to ensure chatbot.js has loaded first
+        setTimeout(initializeIntegration, 500);
     }
 
     // Expose configuration for updates
