@@ -95,7 +95,16 @@
         `;
         closeBtn.onclick = () => {
             container.style.display = 'none';
-            window.toggleChat(false);
+            // Uncheck the AI Mode toggle
+            const aiToggle = document.getElementById('anythingllm-toggle');
+            if (aiToggle && aiToggle.checked) {
+                aiToggle.checked = false;
+                // Show built-in chat elements
+                const chatBody = document.getElementById('chat-body');
+                const chatInput = document.querySelector('.chat-input');
+                if (chatBody) chatBody.style.display = 'block';
+                if (chatInput) chatInput.style.display = 'flex';
+            }
         };
         header.appendChild(closeBtn);
         
@@ -113,22 +122,30 @@
             return false;
         }
 
-        // Clear existing widget content but keep header
-        if (widgetContainer) {
-            // Update header title
-            const titleSpan = widgetContainer.querySelector('span');
-            if (titleSpan) {
-                titleSpan.textContent = `AI Chat - ${config.name}`;
-            }
-            
-            // Remove iframe containers, keep header
-            const iframes = widgetContainer.querySelectorAll('div[style*="calc"]');
-            iframes.forEach(iframe => iframe.remove());
+        // Ensure widget container exists
+        if (!widgetContainer) {
+            widgetContainer = createWidgetContainer();
         }
+
+        // Update header title
+        const titleSpan = widgetContainer.querySelector('span');
+        if (titleSpan) {
+            titleSpan.textContent = `AI Chat - ${config.name}`;
+        }
+        
+        // Remove any existing iframe containers
+        const existingIframes = widgetContainer.querySelectorAll('iframe');
+        existingIframes.forEach(iframe => {
+            if (iframe.parentElement !== widgetContainer) {
+                iframe.parentElement.remove();
+            } else {
+                iframe.remove();
+            }
+        });
 
         // Create iframe container
         const iframeContainer = document.createElement('div');
-        iframeContainer.style.cssText = 'width: 100%; height: calc(100% - 40px);';
+        iframeContainer.style.cssText = 'width: 100%; height: calc(100% - 45px);';
         
         // Create iframe for the embed
         const iframe = document.createElement('iframe');
@@ -145,11 +162,22 @@
         embedUrl.searchParams.set('text_size', 'normal');
         embedUrl.searchParams.set('open_on_load', 'false');
         
+        console.log('Loading AnythingLLM iframe:', embedUrl.toString());
         iframe.src = embedUrl.toString();
+        
+        // Add load event listener
+        iframe.onload = () => {
+            console.log('AnythingLLM iframe loaded successfully');
+        };
+        iframe.onerror = (e) => {
+            console.error('AnythingLLM iframe failed to load:', e);
+        };
+        
         iframeContainer.appendChild(iframe);
         widgetContainer.appendChild(iframeContainer);
         
         currentPersona = persona;
+        console.log('Widget loaded for persona:', persona);
         return true;
     }
 
@@ -236,7 +264,7 @@
         `;
 
         const toggleLabel = document.createElement('label');
-        toggleLabel.style.cssText = 'font-size: 12px; color: #666;';
+        toggleLabel.style.cssText = 'font-size: 12px; color: #fff; font-weight: 500;';
         toggleLabel.textContent = 'AI Mode:';
 
         const toggleSwitch = document.createElement('input');
@@ -251,14 +279,33 @@
             const chatInput = document.querySelector('.chat-input');
             
             if (useAnythingLLM) {
-                // Hide built-in chat elements
-                if (chatBody) chatBody.style.display = 'none';
-                if (chatInput) chatInput.style.display = 'none';
-                
-                // Show AnythingLLM widget
+                // Get current persona
                 const select = document.getElementById('persona-select');
-                if (select && loadPersonaWidget(select.value)) {
-                    widgetContainer.style.display = 'block';
+                const persona = select ? select.value : 'it-analyst';
+                const config = ANYTHINGLLM_CONFIG[persona];
+                
+                // Check if AnythingLLM is configured
+                if (config && config.embedId && !config.embedId.includes('YOUR-')) {
+                    // Hide built-in chat elements
+                    if (chatBody) chatBody.style.display = 'none';
+                    if (chatInput) chatInput.style.display = 'none';
+                    
+                    // Hide the entire chat panel
+                    if (chatPanel) chatPanel.classList.remove('active');
+                    
+                    // Load and show AnythingLLM widget
+                    if (loadPersonaWidget(persona)) {
+                        widgetContainer.style.display = 'block';
+                        console.log('AI Mode enabled for', persona);
+                    } else {
+                        console.error('Failed to load AnythingLLM widget');
+                        this.checked = false;
+                        if (chatBody) chatBody.style.display = 'block';
+                        if (chatInput) chatInput.style.display = 'flex';
+                    }
+                } else {
+                    alert('AnythingLLM is not configured for ' + persona);
+                    this.checked = false;
                 }
             } else {
                 // Show built-in chat elements
