@@ -1,5 +1,9 @@
 # TechNova Systems Security Incident Simulator
 
+<!-- BADGES:START -->
+[![demo](https://img.shields.io/badge/-demo-blue?style=flat-square)](https://github.com/topics/demo) [![website](https://img.shields.io/badge/-website-2196f3?style=flat-square)](https://github.com/topics/website) [![css](https://img.shields.io/badge/-css-1572b6?style=flat-square)](https://github.com/topics/css) [![cybersecurity](https://img.shields.io/badge/-cybersecurity-f44336?style=flat-square)](https://github.com/topics/cybersecurity) [![edtech](https://img.shields.io/badge/-edtech-4caf50?style=flat-square)](https://github.com/topics/edtech) [![html](https://img.shields.io/badge/-html-e34f26?style=flat-square)](https://github.com/topics/html) [![interactive-learning](https://img.shields.io/badge/-interactive--learning-blue?style=flat-square)](https://github.com/topics/interactive-learning) [![javascript](https://img.shields.io/badge/-javascript-f7df1e?style=flat-square)](https://github.com/topics/javascript) [![phishing](https://img.shields.io/badge/-phishing-blue?style=flat-square)](https://github.com/topics/phishing) [![security-training](https://img.shields.io/badge/-security--training-blue?style=flat-square)](https://github.com/topics/security-training)
+<!-- BADGES:END -->
+
 An interactive cybersecurity education tool designed for Year 12 IT students to investigate a realistic phishing attack and data breach scenario.
 
 ## 🎯 Purpose
