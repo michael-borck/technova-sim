@@ -3,78 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phishing Email Evidence - Internal | TechNova Systems</title>
+    <title>Phishing Email Evidence — Internal | TechNova Systems</title>
+    <meta name="description" content="Analysis of the phishing email behind the TechNova incident.">
+    <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
-    <style>
-        .email-container {
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 0;
-            margin: 2rem 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .email-header {
-            background: #f5f5f5;
-            padding: 1rem;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .email-field {
-            display: flex;
-            margin-bottom: 0.5rem;
-        }
-        .email-field strong {
-            min-width: 80px;
-            color: #666;
-        }
-        .email-body {
-            padding: 1.5rem;
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-        }
-        .phishing-highlight {
-            background: #ffeb3b;
-            padding: 2px 4px;
-            border-radius: 3px;
-        }
-        .email-button {
-            display: inline-block;
-            background: #4CAF50;
-            color: white;
-            padding: 12px 24px;
-            text-decoration: none;
-            border-radius: 5px;
-            margin: 1rem 0;
-        }
-        .analysis-box {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-        }
-        .suspicious-item {
-            color: #d32f2f;
-            font-weight: bold;
-        }
-    </style>
 </head>
 <body>
+    <a href="#main" class="skip-link">Skip to content</a>
     <header class="header">
-        <div class="wrap">
-            <a href="../index.html" class="logo">
-                <span>TechNova Systems</span>
+        <div class="wrap header-inner">
+            <a href="../index.html" class="logo" aria-label="TechNova Systems — home">
+                <span class="logo-mark" aria-hidden="true">
+                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs><linearGradient id="lgA" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#2563eb"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs>
+                        <rect width="40" height="40" rx="11" fill="url(#lgA)"/>
+                        <path d="M12 14.5h16M20 14.5v13.5" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/>
+                        <circle cx="20" cy="14.5" r="2.7" fill="#fff"/><circle cx="20" cy="28" r="2.7" fill="#fff"/>
+                    </svg>
+                </span>
+                <span class="logo-text">TechNova<span class="logo-sub"> Systems</span></span>
             </a>
-            <nav class="nav">
+            <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav">
+                <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
+            </button>
+            <nav class="nav" id="primary-nav">
                 <a href="../index.html">Home</a>
                 <a href="../press.html">Press</a>
-                <a href="../faq.html">Customer FAQ</a>
-                <a href="helpdesk-log.html">Helpdesk Log</a>
+                <a href="../faq.html">FAQ</a>
+                <a href="../staff-portal.html">Staff Portal</a>
             </nav>
         </div>
     </header>
 
-    <main class="main">
+    <main class="main" id="main">
         <div class="wrap">
             <div class="internal-header">
                 INTERNAL DOCUMENT - EVIDENCE
@@ -208,12 +172,44 @@
     </main>
 
     <footer class="footer">
-        <div class="wrap">
-            <p>Internal Document - TechNova Systems</p>
-            <p class="small">Evidence File - Do Not Distribute</p>
+        <div class="wrap footer-inner">
+            <div class="footer-brand">
+                <span class="logo-mark" aria-hidden="true">
+                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs><linearGradient id="lgB" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#2563eb"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs>
+                        <rect width="40" height="40" rx="11" fill="url(#lgB)"/>
+                        <path d="M12 14.5h16M20 14.5v13.5" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/>
+                        <circle cx="20" cy="14.5" r="2.7" fill="#fff"/><circle cx="20" cy="28" r="2.7" fill="#fff"/>
+                    </svg>
+                </span>
+                <div>
+                    <strong>TechNova Systems</strong>
+                    <p>Internal document — confidential.</p>
+                </div>
+            </div>
+            <div class="footer-cols">
+                <div>
+                    <h4>Evidence</h4>
+                    <a href="helpdesk-log.html">Helpdesk log</a>
+                    <a href="phishing-email.html">Phishing email</a>
+                    <a href="access-log.html">Access log</a>
+                    <a href="invoices.html">Invoice comparison</a>
+                    <a href="memo.html">Security memo</a>
+                </div>
+                <div>
+                    <h4>Back to site</h4>
+                    <a href="../index.html">Homepage</a>
+                    <a href="../faq.html">Customer FAQ</a>
+                    <a href="../staff-portal.html">Staff portal</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-base">
+            <div class="wrap">Internal Document — TechNova Systems · Confidential — Do Not Distribute</div>
         </div>
     </footer>
 
+    <script src="../assets/js/site.js" defer></script>
     <script src="../assets/js/personas.js"></script>
     <script src="../assets/js/chatbot.js"></script>
 </body>

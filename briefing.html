@@ -3,491 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mission Briefing - TechNova Incident Response</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .briefing-container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 1200px;
-            width: 100%;
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
-        
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .header .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            font-weight: 300;
-        }
-        
-        .classification {
-            background: #e74c3c;
-            color: white;
-            padding: 0.5rem;
-            text-align: center;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-        
-        .tabs {
-            display: flex;
-            background: #ecf0f1;
-            overflow-x: auto;
-            border-bottom: 3px solid #3498db;
-        }
-        
-        .tab {
-            padding: 1rem 1.5rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: #7f8c8d;
-            transition: all 0.3s;
-            white-space: nowrap;
-            position: relative;
-        }
-        
-        .tab:hover {
-            background: rgba(52, 152, 219, 0.1);
-            color: #2c3e50;
-        }
-        
-        .tab.active {
-            color: #2c3e50;
-            background: white;
-        }
-        
-        .tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: #3498db;
-        }
-        
-        .content {
-            padding: 2rem;
-            min-height: 400px;
-        }
-        
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .section {
-            margin-bottom: 2rem;
-        }
-        
-        .section h2 {
-            color: #2c3e50;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .section h2::before {
-            content: '▶';
-            color: #3498db;
-        }
-        
-        .alert-box {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 1rem;
-            margin: 1.5rem 0;
-            border-radius: 5px;
-        }
-        
-        .alert-box strong {
-            color: #856404;
-        }
-        
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-        
-        .info-card {
-            background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid #dee2e6;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        .info-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        .info-card h3 {
-            color: #495057;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-        }
-        
-        .info-card p {
-            color: #212529;
-            font-weight: 500;
-        }
-        
-        .objectives {
-            background: #e8f4f8;
-            border: 1px solid #b8daff;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-        }
-        
-        .objectives h3 {
-            color: #004085;
-            margin-bottom: 1rem;
-        }
-        
-        .objectives ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .objectives li {
-            padding: 0.5rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-        
-        .objectives li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #28a745;
-            font-weight: bold;
-        }
-        
-        .tools-section {
-            background: #f0f0f0;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-        }
-        
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .tool-item {
-            background: white;
-            padding: 1rem;
-            border-radius: 5px;
-            text-align: center;
-            border: 1px solid #ddd;
-            transition: transform 0.2s;
-        }
-        
-        .tool-item:hover {
-            transform: scale(1.05);
-        }
-        
-        .tool-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .tool-name {
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        
-        .tool-desc {
-            font-size: 0.85rem;
-            color: #666;
-            margin-top: 0.25rem;
-        }
-        
-        .tips-section {
-            background: #e8f5e9;
-            border: 1px solid #4caf50;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-        }
-        
-        .tips-section h3 {
-            color: #2e7d32;
-            margin-bottom: 1rem;
-        }
-        
-        .tips-section ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .tips-section li {
-            padding: 0.5rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-            color: #1b5e20;
-        }
-        
-        .tips-section li::before {
-            content: '💡';
-            position: absolute;
-            left: 0;
-        }
-        
-        .warning {
-            background: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-            padding: 1rem;
-            border-radius: 5px;
-            margin: 1rem 0;
-        }
-        
-        .persona-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-        
-        .persona-card {
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.3s;
-        }
-        
-        .persona-card:hover {
-            border-color: #3498db;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-        
-        .persona-icon {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .persona-name {
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 0.25rem;
-        }
-        
-        .persona-role {
-            color: #7f8c8d;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .persona-info {
-            font-size: 0.85rem;
-            color: #666;
-            line-height: 1.4;
-        }
-        
-        .scenario-timeline {
-            position: relative;
-            padding-left: 2rem;
-            margin: 1.5rem 0;
-        }
-        
-        .scenario-timeline::before {
-            content: '';
-            position: absolute;
-            left: 0.5rem;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: #3498db;
-        }
-        
-        .timeline-item {
-            position: relative;
-            margin-bottom: 1.5rem;
-        }
-        
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -1.75rem;
-            top: 0.25rem;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #3498db;
-            border: 2px solid white;
-            box-shadow: 0 0 0 3px #e0e0e0;
-        }
-        
-        .timeline-time {
-            color: #3498db;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-        
-        .timeline-event {
-            color: #2c3e50;
-            margin-top: 0.25rem;
-        }
-        
-        .readiness-checklist {
-            background: #fff;
-            border: 2px solid #27ae60;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-        
-        .readiness-checklist h3 {
-            color: #27ae60;
-            margin-bottom: 1rem;
-        }
-        
-        .readiness-checklist label {
-            display: block;
-            padding: 0.5rem 0;
-            cursor: pointer;
-        }
-        
-        .readiness-checklist input[type="checkbox"] {
-            margin-right: 0.75rem;
-            width: 18px;
-            height: 18px;
-            vertical-align: middle;
-        }
-        
-        .action-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 2rem;
-            text-align: center;
-            margin: -2rem;
-            margin-top: 2rem;
-        }
-        
-        .start-button {
-            display: inline-block;
-            background: white;
-            color: #667eea;
-            padding: 1rem 3rem;
-            font-size: 1.25rem;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 50px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        
-        .start-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-        
-        .countdown {
-            color: white;
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-        
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            }
-            50% {
-                box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
-            }
-            100% {
-                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .tabs {
-                overflow-x: scroll;
-            }
-            
-            .tab {
-                font-size: 0.85rem;
-                padding: 0.75rem 1rem;
-            }
-            
-            .info-grid, .tools-grid, .persona-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .start-button {
-                padding: 0.8rem 2rem;
-                font-size: 1.1rem;
-            }
-        }
-    </style>
+    <title>Mission Briefing — TechNova Incident Response</title>
+    <meta name="description" content="Mission briefing for the TechNova Systems security incident investigation training exercise.">
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
-    <div class="briefing-container">
-        <div class="header">
+<body class="briefing-page">
+    <a href="#main" class="skip-link">Skip to content</a>
+    <div class="briefing-container" id="main">
+        <div class="brief-hero">
+            <div class="brand-row">
+                <span class="logo-mark" aria-hidden="true">
+                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="11" fill="rgba(255,255,255,.18)"/>
+                        <path d="M12 14.5h16M20 14.5v13.5" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/>
+                        <circle cx="20" cy="14.5" r="2.7" fill="#fff"/><circle cx="20" cy="28" r="2.7" fill="#fff"/>
+                    </svg>
+                </span>
+                <span class="logo-text brand-text">TechNova Systems</span>
+            </div>
             <h1>🔒 Cybersecurity Incident Response</h1>
             <div class="subtitle">TechNova Systems Security Breach Investigation</div>
         </div>
@@ -497,13 +34,13 @@
         </div>
         
         <div class="tabs">
-            <button class="tab active" onclick="showTab('mission')">📋 Mission</button>
-            <button class="tab" onclick="showTab('scenario')">🎯 Scenario</button>
-            <button class="tab" onclick="showTab('tools')">🛠️ Tools</button>
-            <button class="tab" onclick="showTab('personas')">👥 Personas</button>
-            <button class="tab" onclick="showTab('timeline')">⏰ Timeline</button>
-            <button class="tab" onclick="showTab('tips')">💡 Tips</button>
-            <button class="tab" onclick="showTab('ready')">✅ Ready?</button>
+            <button class="tab active" onclick="showTab('mission', this)">📋 Mission</button>
+            <button class="tab" onclick="showTab('scenario', this)">🎯 Scenario</button>
+            <button class="tab" onclick="showTab('tools', this)">🛠️ Tools</button>
+            <button class="tab" onclick="showTab('personas', this)">👥 Personas</button>
+            <button class="tab" onclick="showTab('timeline', this)">⏰ Timeline</button>
+            <button class="tab" onclick="showTab('tips', this)">💡 Tips</button>
+            <button class="tab" onclick="showTab('ready', this)">✅ Ready?</button>
         </div>
         
         <div class="content">
@@ -860,59 +397,55 @@
     </div>
     
     <script>
-        // Tab management
-        function showTab(tabName) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(content => {
+        // Tab management — element passed via inline handler (no reliance on the global event)
+        window.showTab = function(tabName, btn) {
+            document.querySelectorAll('.tab-content').forEach(function(content) {
                 content.classList.remove('active');
             });
-            
-            // Remove active from all tab buttons
-            document.querySelectorAll('.tab').forEach(tab => {
+            document.querySelectorAll('.tab').forEach(function(tab) {
                 tab.classList.remove('active');
             });
-            
-            // Show selected tab
-            document.getElementById(tabName).classList.add('active');
-            
-            // Mark tab button as active
-            event.target.classList.add('active');
-        }
-        
-        // Animate urgency messages
+            var panel = document.getElementById(tabName);
+            if (panel) panel.classList.add('active');
+            if (btn) btn.classList.add('active');
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
-            const classification = document.querySelector('.classification');
-            setInterval(() => {
-                classification.style.opacity = '0.7';
-                setTimeout(() => {
-                    classification.style.opacity = '1';
-                }, 500);
-            }, 3000);
-            
+            // Animate urgency messages
+            var classification = document.querySelector('.classification');
+            if (classification) {
+                setInterval(function() {
+                    classification.style.opacity = '0.7';
+                    setTimeout(function() { classification.style.opacity = '1'; }, 500);
+                }, 3000);
+            }
+
             // Rotate countdown messages
-            let urgencyMessages = [
+            var urgencyMessages = [
                 "The clock is ticking. TechNova needs your help!",
                 "Every minute counts in incident response.",
                 "Customers are at risk. Begin your investigation now.",
                 "Are you ready to uncover the truth?",
                 "Your skills are needed. Start the investigation!"
             ];
-            let currentMessage = 0;
-            
-            setInterval(() => {
-                currentMessage = (currentMessage + 1) % urgencyMessages.length;
-                document.querySelector('.countdown').textContent = urgencyMessages[currentMessage];
-            }, 4000);
-            
-            // Check all checkboxes functionality
-            const checkboxes = document.querySelectorAll('.readiness-checklist input[type="checkbox"]');
-            checkboxes.forEach(checkbox => {
+            var currentMessage = 0;
+            var countdown = document.querySelector('.countdown');
+            if (countdown) {
+                setInterval(function() {
+                    currentMessage = (currentMessage + 1) % urgencyMessages.length;
+                    countdown.textContent = urgencyMessages[currentMessage];
+                }, 4000);
+            }
+
+            // Checklist completion → highlight start button
+            var checkboxes = document.querySelectorAll('.readiness-checklist input[type="checkbox"]');
+            var startButton = document.querySelector('.start-button');
+            checkboxes.forEach(function(checkbox) {
                 checkbox.addEventListener('change', function() {
-                    const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-                    const startButton = document.querySelector('.start-button');
-                    if (allChecked) {
-                        startButton.style.background = '#27ae60';
-                        startButton.style.color = 'white';
+                    var allChecked = Array.from(checkboxes).every(function(cb) { return cb.checked; });
+                    if (allChecked && startButton) {
+                        startButton.style.background = '#16a34a';
+                        startButton.style.color = '#fff';
                         startButton.textContent = '✓ Begin Investigation →';
                     }
                 });

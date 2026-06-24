@@ -199,40 +199,96 @@ const personaKnowledge = {
     }
 };
 
-// Enhanced response function for integration
+// Synonym groups: map each response-key to the phrases a student might actually type.
+// Decouples natural-language questions from the response object keys.
+const personaIntents = {
+    'it-analyst': {
+        email:     ['email', 'phishing', 'link', 'message', 'sent', 'mail'],
+        sarah:     ['sarah', 'accounts', 'clerk', 'who clicked', 'her', 'she', 'whose'],
+        password:  ['password', 'credential', 'login', 'log in', '2fa', 'mfa', 'reset', 'authenticat', 'two factor'],
+        backup:    ['backup', 'cloudsafe', 'cloud', 'renew', 'safe', 'back up'],
+        timeline:  ['timeline', 'when', 'what time', 'happen', 'morning', 'sequence', 'order', 'first', 'then'],
+        files:     ['file', 'data', 'invoice', 'download', 'access', 'stolen', 'compromised', 'pdf', 'exfiltrat', 'taken', 'what was', 'how many'],
+        ip:        ['ip', 'address', 'where from', 'location', 'country', 'origin', 'trace', 'vpn', 'hacker', 'attacker', 'who did', 'who is'],
+        help:      ['help', 'start', 'begin', 'where do', 'look', 'evidence', 'investigate', 'should', 'clue', 'find']
+    },
+    'accounts-clerk': {
+        email:       ['email', 'phishing', 'message', 'link', 'looked', 'received', 'sent', 'mail', 'notice'],
+        click:       ['click', 'clicked', 'link', 'opened', 'open', 'pressed', 'went', 'followed'],
+        password:    ['password', 'credential', 'login', 'entered', 'typed', 'submitted', 'log in'],
+        sorry:       ['sorry', 'fault', 'blame', 'mistake', 'job', 'fired', 'worried', 'upset', 'terrible', 'feel'],
+        invoice:     ['invoice', 'invoices', 'billing', 'files', 'data', 'payment', 'accounts', 'customer'],
+        legitimate:  ['legitimate', 'real', 'genuine', 'convincing', 'professional', 'looked real', 'believe'],
+        renewal:     ['renewal', 'renew', 'backup', 'cloudsafe', 'expire', 'urgent', '24 hour'],
+        training:    ['training', 'trained', 'learn', 'taught', 'awareness', 'course', 'teach'],
+        timeline:    ['timeline', 'when', 'what time', 'happen', 'morning', 'sequence']
+    },
+    'security-officer': {
+        attack:      ['attack', 'vector', 'method', 'how did', 'how was', 'phishing', 'spear', 'social engineering', 'breach', 'get in', 'happen', 'what kind'],
+        data:        ['data', 'file', 'files', 'invoice', 'access', 'accessed', 'download', 'stolen', 'compromised', 'exfiltrat', 'what was', 'taken', 'what files', 'how many'],
+        impact:      ['impact', 'damage', 'money', 'loss', 'paid', 'financial', 'cost', 'customer', 'affected', 'reputation', 'how bad', 'how much'],
+        technical:   ['technical', 'spf', 'dkim', 'dmarc', 'filter', 'gateway', 'header', 'email security', 'failed'],
+        sarah:       ['sarah', 'accounts', 'clerk', 'victim', 'her', 'who clicked', 'whose'],
+        prevention:  ['prevention', 'prevent', 'recommend', 'fix', 'improve', 'mfa', '2fa', 'stop', 'secure', 'measure', 'control', 'training', 'better', 'should'],
+        evidence:    ['evidence', 'log', 'proof', 'find', 'where', 'look', 'access log', 'helpdesk', 'show me', 'see'],
+        response:    ['response', 'doing', 'action', 'what are you', 'notify', 'police', 'law enforcement', 'contain', 'handled', 'report'],
+        gaps:        ['gap', 'weakness', 'vulnerab', 'missing', 'fail', 'why did', 'why was', 'vulnerable', 'hole', 'went wrong', 'cause']
+    },
+    'ceo': {
+        customer:    ['customer', 'clients', 'complaint', 'call', 'angry', 'leaving', 'switch', 'churn', 'lost'],
+        reputation:  ['reputation', 'trust', 'brand', 'image', 'public', 'credib'],
+        sarah:       ['sarah', 'accounts', 'clerk', 'fired', 'her', 'blame', 'whose fault'],
+        money:       ['money', 'loss', 'cost', 'paid', 'financial', 'stolen', 'budget', 'dollar', '$', 'how much'],
+        press:       ['press', 'media', 'news', 'reporter', 'statement', 'story', 'journalist', 'public'],
+        response:    ['response', 'doing', 'action', 'handling', 'plan', 'what are you', 'next step', 'next'],
+        staff:       ['staff', 'team', 'morale', 'people', 'everyone', 'employee'],
+        board:       ['board', 'director', 'meeting', 'boss', 'job', 'fired', 'ceo', 'leadership'],
+        solution:    ['solution', 'fix', 'recommend', 'plan', 'do', 'resolve', 'budget', 'spend', 'invest']
+    }
+};
+
+// Enhanced response function: synonym-based intent matching with scoring,
+// greeting detection, and persona-aware evidence pointers as fallback.
 window.getPersonaResponse = function(persona, message, context) {
     const p = personaKnowledge[persona];
     if (!p) return "I'm not sure who you're trying to reach.";
-    
-    const lowerMessage = message.toLowerCase();
-    
-    // Check for keyword matches in responses
-    for (const [keyword, response] of Object.entries(p.responses)) {
-        if (keyword !== 'greeting' && keyword !== 'default') {
-            if (lowerMessage.includes(keyword)) {
-                return response;
-            }
+
+    const raw = (message || '').toLowerCase().trim();
+    // Greetings / who-are-you get the persona greeting
+    if (/^(hi|hello|hey|hiya|greetings|good (morning|afternoon|day)|yo)\b/.test(raw) || /who are you|your name|what do you do/.test(raw)) {
+        return p.responses.greeting || p.responses.default;
+    }
+
+    // Normalise: keep alphanumerics + $ + spaces, collapse whitespace, pad for leading boundary
+    const msg = ' ' + raw.replace(/[^a-z0-9$ ]/g, ' ').replace(/\s+/g, ' ') + ' ';
+
+    // Score every intent; highest score wins, ties broken by declared order
+    const intents = personaIntents[persona] || {};
+    let bestKey = null, bestScore = 0;
+    for (const key of Object.keys(intents)) {
+        if (!p.responses[key]) continue;
+        let score = 0;
+        for (const trigger of intents[key]) {
+            if (msg.includes(' ' + trigger)) score++;
         }
+        if (score > bestScore) { bestScore = score; bestKey = key; }
     }
-    
-    // Check for specific evidence references
-    if (lowerMessage.includes('helpdesk') || lowerMessage.includes('log')) {
-        return "Yes, check the helpdesk log - it has the complete timeline of what happened this morning.";
+    if (bestKey) return p.responses[bestKey];
+
+    // Persona-agnostic evidence pointers (broadened)
+    if (/helpdesk|ticket|support log/.test(msg)) {
+        return "Check the helpdesk log — it has the complete timeline of what happened this morning.";
     }
-    
-    if (lowerMessage.includes('phishing') && lowerMessage.includes('email')) {
+    if (/phishing|email|fake mail/.test(msg)) {
         return "The phishing email is in our evidence files. It's a textbook example of social engineering.";
     }
-    
-    if (lowerMessage.includes('invoice')) {
+    if (/invoice|billing|payment|bank/.test(msg)) {
         return "We have examples of real versus fake invoices in the evidence. The bank details were changed.";
     }
-    
-    if (lowerMessage.includes('access') && lowerMessage.includes('log')) {
-        return "The server access logs show exactly when and what files were accessed. 23 files in 14 minutes.";
+    if (/access log|server log|file server|logs/.test(msg)) {
+        return "The server access logs show exactly when and what files were accessed — 23 files in 14 minutes.";
     }
-    
-    // Return default response
+
     return p.responses.default;
 };
 
